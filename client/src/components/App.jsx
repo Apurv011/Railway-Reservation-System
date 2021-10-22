@@ -7,6 +7,7 @@ import TrainInfo from "./TrainInfo/TrainInfo";
 import AddPassengers from "./AddPassengers/AddPassengers";
 import BookTicket from "./BookTicket/BookTicket";
 import UserTicket from "./UserTicket/UserTicket";
+import TrainSchedule from "./TrainSchedule/TrainSchedule";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
@@ -44,6 +45,11 @@ function App() {
       <Route path="/bookTicket" exact>
         <BookTicket />
       </Route>
+
+      <Route path="/trainSchedule" exact>
+        <TrainSchedule />
+      </Route>
+
 
       <Route path="/myTickets" exact>
         <UserTicket />

@@ -120,20 +120,20 @@ function bookTicket(){
     <div>
       <Header />
       <h1 style={{textAlign: "center", padding:"25px"}}>Ticket</h1>
-      <div style={{marginLeft:"20px", marginRight:"20px", overflowX:"auto"}}>
-      <table className="table table-hover table-striped table-info">
+      <div className="table-responsive" style={{padding:"25px"}}>
+      <table className="table table-hover table-danger">
         <thead>
-          <tr className="table-danger">
-            <th>Train Number</th>
-            <th>Train Name</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Date Of Journey</th>
-            <th>Arrival Time(At {from})</th>
-            <th>Arrival Time(At {to})</th>
-            <th>Passenger Details(Name, Gender, Age)</th>
-            <th>Total Cost</th>
-          </tr>
+        <tr className="table-danger">
+          <th>Train Number</th>
+          <th>Train Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Date Of Journey</th>
+          <th>Arrival Time(At {from})</th>
+          <th>Arrival Time(At {to})</th>
+          <th>Passenger Details(Name, Gender, Age)</th>
+          <th>Total Cost</th>
+        </tr>
         </thead>
         <tbody>
           <tr className="table-info">

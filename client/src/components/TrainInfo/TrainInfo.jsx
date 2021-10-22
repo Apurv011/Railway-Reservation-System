@@ -91,8 +91,8 @@ function TrainInfo(props){
     <Header/>
     <div className="d-flex justify-content-center" style={{marginTop: "80px"}}>
         <div className="card bg-light mb-3">
-          <div className="card-header">
-            <h3 className="d-flex justify-content-center">Book Your Journey</h3>
+          <div className="card-header bg-dark">
+            <h3 style={{color:"#ffffff"}} className="d-flex justify-content-center">Book Your Journey</h3>
           </div>
           <div className="card-body">
             <h5 className="card-title">

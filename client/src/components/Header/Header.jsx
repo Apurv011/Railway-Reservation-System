@@ -28,7 +28,10 @@ function Header(props){
         <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <button onClick={myTicket} className="nav-link btn btn-link">My Tickets</button>
+            {props.page!=="Home" && <button onClick={searchPage} className="nav-link btn btn-link">Home</button> }
+          </li>
+          <li className="nav-item">
+            {props.page!=="My Tickets" && <button onClick={myTicket} className="nav-link btn btn-link">My Tickets</button> }
           </li>
           <li className="nav-item">
             <button onClick={logout} className="nav-link btn btn-link">Logout</button>

@@ -46,6 +46,13 @@ function ResultTrains(props){
       });
   }
 
+  function schedule(trainId, trainNumber){
+    history.push({
+          pathname: '/trainSchedule',
+          state: { trainId: trainId, from: from, to: to, dateOfJourney: dateOfJourney,  trainNumber: trainNumber}
+      });
+  }
+
   return (
     <div>
     <Header />
@@ -54,20 +61,21 @@ function ResultTrains(props){
       <h3 className="d-flex justify-content-center">Source Station: {from}</h3>
       <h3 className="d-flex justify-content-center">Destination Station: {to}</h3>
     </div>
+    <div className="table-responsive">
+    <table className="table table-hover table-warning">
+      <thead>
+        <tr>
+          <th scope="col">Train Number</th>
+          <th scope="col">Train Name</th>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th scope="col">Journey Date</th>
+          <th scope="col">Action</th>
+          <th scope="col">Schedule</th>
+        </tr>
+      </thead>
     {allTrains.map((train, index) => {
         return (
-        <div style={{overflowX:"auto"}}>
-        <table className="table table-hover table-striped table-warning">
-          <thead>
-            <tr>
-              <th scope="col">Train Number</th>
-              <th scope="col">Train Name</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
-              <th scope="col">Journey Date</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
           <tbody>
             <tr className="table-info">
               <td>
@@ -88,12 +96,15 @@ function ResultTrains(props){
               <td>
                 <button onClick={() => proceed(train._id, train.trainNumber)} className="btn btn-sm btn-outline-dark">Proceed</button>
               </td>
+              <td>
+                <button onClick={() => schedule(train._id, train.trainNumber)} className="btn btn-sm btn-outline-dark">Schedule</button>
+              </td>
             </tr>
           </tbody>
-        </table>
-        </div>
         );
       })}
+    </table>
+    </div>
       </div>
     </div>
   );

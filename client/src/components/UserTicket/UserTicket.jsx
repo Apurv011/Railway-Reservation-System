@@ -101,8 +101,6 @@ function UserTicket(props){
       history.push("/login");
     }
 
-
-
     setAllTickets((preValues) => {
       return allTickets.filter((ticket, index) => {
         return ticket._id !== ticketId;
@@ -113,13 +111,11 @@ function UserTicket(props){
 
   return (
     <div>
-      <Header />
-      <h1 style={{ padding:"25px"}}>My Tickets</h1>
-      <div style={{marginLeft:"20px", marginRight:"20px", overflowX:"auto"}}>
-        {allTickets.map((ticket, index) => {
-            return (
-        <div>
-        <table className="table table-hover table-striped table-info">
+      <Header page="My Tickets"/>
+      <h1 style={{ paddingLeft:"25px", paddingTop:"25px"}}>My Tickets</h1>
+      {allTickets.length<1 && <h5 style={{paddingLeft: "25px"}}>No Tickets</h5>}
+        <div className="table-responsive" style={{padding:"25px"}}>
+        <table className="table table-hover table-danger">
           <thead>
             <tr className="table-danger">
               <th>Train Number</th>
@@ -133,6 +129,8 @@ function UserTicket(props){
               <th>Action</th>
             </tr>
           </thead>
+        {allTickets.map((ticket, index) => {
+            return (
         <tbody>
           <tr className="table-info">
             <td rowspan={ticket.passengers.length}>
@@ -176,76 +174,73 @@ function UserTicket(props){
             </td>
           </tr>
         </tbody>
-        </table>
-        </div>
       );
     })}
-    {allTickets.length<1 && <h5 style={{marginLeft: "10px"}}>No Tickets</h5>}
-      </div>
-      <h1 style={{ color: "#ff0e0e", padding:"25px"}}>Cancelled Tickets</h1>
-      <div style={{marginLeft:"20px", marginRight:"20px", overflowX:"auto"}}>
+    </table>
+    </div>
+    <h1 style={{ paddingLeft:"25px", paddingTop:"25px", color:"#d63031"}}>Cancelled Tickets</h1>
+    {cancelledTickets.length<1 && <h5 style={{paddingLeft: "25px"}}>No Tickets</h5>}
         {cancelledTickets.map((ticket, index) => {
             return (
-        <div>
-        <table className="table table-hover table-striped table-info">
-          <thead>
-            <tr className="table-danger">
-              <th>Train Number</th>
-              <th>Train Name</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Date Of Journey</th>
-              <th>Date Of Booking</th>
-              <th>Passenger Details(Name, Gender, Age)</th>
-              <th>Total Cost</th>
-            </tr>
-          </thead>
-        <tbody>
-          <tr className="table-info">
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.trainNumber}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.trainName}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.from}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.to}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.dateOfJourney}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.dateOfReservation}</b>
-            </td>
-            {ticket.passengers.map((p, index) => {
-                return (
-                <div>
-                  <td>
-                    <b>{p.name}</b>
-                  </td>
-                  <td>
-                    <b>{p.age}</b>
-                  </td>
-                  <td>
-                    <b>{p.gender}</b>
-                  </td>
-                </div>
-              );
-            })}
-            {cancelledTickets.length<1 && <h5 style={{marginLeft: "10px"}}>No Tickets</h5>}
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.cost}</b>
-            </td>
-          </tr>
-        </tbody>
-        </table>
-        </div>
-      );
-    })}
-      </div>
+              <div className="table-responsive" style={{padding:"25px"}}>
+              <table className="table table-hover table-danger">
+                <thead>
+                  <tr className="table-danger">
+                  <th>Train Number</th>
+                  <th>Train Name</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Date Of Journey</th>
+                  <th>Date Of Booking</th>
+                  <th>Passenger Details(Name, Gender, Age)</th>
+                  <th>Total Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="table-info">
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.trainNumber}</b>
+                    </td>
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.trainName}</b>
+                    </td>
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.from}</b>
+                    </td>
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.to}</b>
+                    </td>
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.dateOfJourney}</b>
+                    </td>
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.dateOfReservation}</b>
+                    </td>
+                    {ticket.passengers.map((p, index) => {
+                        return (
+                        <div>
+                          <td>
+                            <b>{p.name}</b>
+                          </td>
+                          <td>
+                            <b>{p.age}</b>
+                          </td>
+                          <td>
+                            <b>{p.gender}</b>
+                          </td>
+                        </div>
+                      );
+                    })}
+                    {cancelledTickets.length<1 && <h5 style={{marginLeft: "10px"}}>No Tickets</h5>}
+                    <td rowspan={ticket.passengers.length}>
+                      <b>{ticket.cost}</b>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          );
+        })}
       <div className="modal fade" id="exampleModalCenter">
         <div className="modal-dialog">
           <div className="modal-content">

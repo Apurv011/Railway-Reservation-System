@@ -10,7 +10,7 @@ const userRoutes = require('./api/routes/user');
 const stationRoutes = require('./api/routes/stations');
 const seatRoutes = require('./api/routes/seats');
 
-mongoose.connect('mongodb://127.0.0.1:27017/railway', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_URL_DEV, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const app = express();
 // Log request data

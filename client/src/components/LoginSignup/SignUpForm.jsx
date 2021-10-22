@@ -17,6 +17,7 @@ function SignUpForm(props){
   const [uGender, setuGender] = useState("");
 
   function registerUser(event) {
+    event.preventDefault();
       axios.post("http://localhost:5000/user/signup", user).then(response => {
         history.push('/login');
       });

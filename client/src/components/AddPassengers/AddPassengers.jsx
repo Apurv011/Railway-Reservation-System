@@ -159,19 +159,19 @@ function AddPassengers(props){
             </div>
             {b && <h5 style={{textAlign:"center"}}>All Passengers </h5>}
             {
-              b &&
+              b  &&
                 allPassengers.map((p, index) => {
                     return (
-                      <div className="container" style={{marginTop: "20px"}}>
-                      <table className="table table-hover table-striped table-warning" style={{marginTop: "20px"}}>
-                      <thead>
-                        <tr>
+                      <div style={{marginTop: "30px"}} className="table-responsive container">
+                      <table className="table table-hover table-warning">
+                        <thead>
+                          <tr>
                           <th scope="col">Name</th>
                           <th scope="col">Age</th>
                           <th scope="col">Gender</th>
                           <th scope="col">Action</th>
-                        </tr>
-                      </thead>
+                          </tr>
+                        </thead>
                       <tbody>
                         <tr className="table-info">
                           <td>
@@ -197,9 +197,11 @@ function AddPassengers(props){
               <div className="container" style={{marginTop: "20px"}}>
                 <h5>Total Cost: {location.state.cost*allPassengers.length} </h5>
               </div>
-              &&
-              <div style={{margin:"5px"}} className="container" style={{textAlign:"center"}}>
+            }
+            { b &&
+              <div className="container" style={{textAlign:"center"}}>
                 <button
+                style={{marginBottom:"40px"}}
                   type="submit"
                   className="btn btn-dark btn-lg"
                   onClick={confirm}

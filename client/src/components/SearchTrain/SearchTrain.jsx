@@ -82,12 +82,12 @@ function SearchTrain(props){
 
   return (
     <div>
-    <Header />
+    <Header page="Home"/>
     <div className="container" style={{marginTop: "80px"}}>
       <div className="d-flex justify-content-center">
           <div className="card bg-light mb-3">
-            <div className="card-header">
-              <h3 className="d-flex justify-content-center">
+            <div className="card-header bg-dark">
+              <h3 style={{color:"#ffffff"}} className="d-flex justify-content-center">
                 Your Journey is Here
               </h3>
             </div>
