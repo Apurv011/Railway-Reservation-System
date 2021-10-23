@@ -18,6 +18,10 @@ function Header(props){
     history.push('/searchTrain');
   }
 
+  function userHome(){
+    history.push('/userHome');
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -29,6 +33,9 @@ function Header(props){
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             {props.page!=="Home" && <button onClick={searchPage} className="nav-link btn btn-link">Home</button> }
+          </li>
+          <li className="nav-item">
+            {props.page!=="User Home" && <button onClick={userHome} className="nav-link btn btn-link">My Details</button> }
           </li>
           <li className="nav-item">
             {props.page!=="My Tickets" && <button onClick={myTicket} className="nav-link btn btn-link">My Tickets</button> }

@@ -87,7 +87,7 @@ function SignUpForm(props){
                             </form>
                             <div className="text-center">
                               <Link to="/login">
-                                <a className="small" href="login.html">Already have an account? Login!</a>
+                                <p className="small" style={{color:"#000000"}}>Already have an account? Login!</p>
                               </Link>
                             </div>
                         </div>

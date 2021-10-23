@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from 'react-router-dom';
+import CaptchaTextGenerator from 'captcha-text-generator';
 
 function LogInForm(){
 
@@ -11,19 +12,27 @@ function LogInForm(){
       password:""
   });
 
+  const [captcha, setCaptcha] = useState("");
+  const [captchaVal, setCaptchaVal] = useState("");
+
   function loginUser(event) {
-    axios.post("http://localhost:5000/user/login", user).then(response => {
-          console.log(response.data);
-          localStorage.clear();
-          localStorage.setItem('userData', JSON.stringify(response.data));
-          history.push('/searchTrain');
-    });
+    if(captcha===captchaVal){
+      axios.post("http://localhost:5000/user/login", user).then(response => {
+            console.log(response.data);
+            localStorage.clear();
+            localStorage.setItem('userData', JSON.stringify(response.data));
+            history.push('/searchTrain');
+      });
 
-    setUser({
-      email: "",
-      password:""
-    });
-
+      setUser({
+        email: "",
+        password:""
+      });
+    }
+    else{
+      alert("Invalid Captcha!");
+      window.location.reload();
+    }
     event.preventDefault();
 
   }
@@ -36,6 +45,15 @@ function LogInForm(){
         [name]: value
       };
     });
+  }
+
+  function handleCaptchaChange(event){
+      console.log(event.target.value);
+      setCaptcha(event.target.value);
+  }
+
+  function result(text){
+    setCaptchaVal(text);
   }
 
   return (
@@ -62,12 +80,24 @@ function LogInForm(){
                                         <div className="mb-3">
                                           <input onChange={handleChange} className="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Password" name="password" value={user.password}/>
                                         </div>
+                                        <div className="mb-3">
+                                          <CaptchaTextGenerator
+                                            height="30px"
+                                            textColor="#2d3436"
+                                            paddingTop="22px"
+                                            background="#ffffff"
+                                            result={result}
+                                          />
+                                        </div>
+                                        <div className="mb-3">
+                                          <input onChange={handleCaptchaChange} className="form-control form-control-user" type="text" id="examplePasswordInput" placeholder="Enter Captcha" name="captcha" value={captcha}/>
+                                        </div>
                                           <button onClick={loginUser} className="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
                                         <hr/>
                                     </form>
                                     <div className="text-center">
                                       <Link to="/signup">
-                                        <a className="small" href="register.html">Create an Account!</a>
+                                        <p className="small" style={{color:"#000000"}}>Don't have an Account? Create Now!</p>
                                       </Link>
                                     </div>
                                 </div>

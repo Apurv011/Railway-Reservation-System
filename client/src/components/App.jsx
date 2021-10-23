@@ -8,6 +8,8 @@ import AddPassengers from "./AddPassengers/AddPassengers";
 import BookTicket from "./BookTicket/BookTicket";
 import UserTicket from "./UserTicket/UserTicket";
 import TrainSchedule from "./TrainSchedule/TrainSchedule";
+import WelcomePage from "./WelcomePage/WelcomePage";
+import UserHome from "./UserHome/UserHome";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
@@ -15,7 +17,11 @@ function App() {
   return (
     <Router>
       <Route path="/" exact>
-        <SignUpForm />
+        <WelcomePage />
+      </Route>
+
+      <Route path="/userHome" exact>
+        <UserHome />
       </Route>
 
       <Route path="/signup" exact>
