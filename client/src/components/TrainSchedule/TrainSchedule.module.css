@@ -112,3 +112,12 @@
     left: 0;
     right: -55.8px;
 }
+
+.hide{
+  display: none;
+}
+
+.myDIV:hover + .hide {
+  display: block;
+  color: red;
+}

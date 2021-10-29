@@ -95,9 +95,8 @@ function UserHome() {
   return (
     <div>
       <Header page="User Home" />
-      <h1 style={{ padding: "20px", textAlign: "center" }}> Welcome </h1>
-      <div className="d-flex justify-content-center ">
-        <div style={{ width: "450px" }} className="card bg-light ">
+      <div style={{paddingTop:"50px", marginBottom: "50px"}} className="d-flex justify-content-center ">
+        <div style={{ width: "450px"}} className="card bg-light ">
           <div className="card-header bg-dark">
             <h3 style={{color: "#ffffff"}} className="d-flex justify-content-center">Account Details</h3>
           </div>

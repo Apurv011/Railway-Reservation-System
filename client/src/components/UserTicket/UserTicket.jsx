@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Header from '../Header/Header';
+import TicketTable from "./TicketTable";
 
 function UserTicket(props){
 
-  const [allTickets, setAllTickets] = useState([]);
+  const [allTodayTickets, setAllTodayTickets] = useState([]);
+  const [allUpcomingTickets, setAllUpcomingTickets] = useState([]);
+  const [allHistoryTickets, setAllHistoryTickets] = useState([]);
   const [cancelledTickets, setCancelledTickets] = useState([]);
   const [availableSeats, setAvailableSeats] = useState(0);
   const [ticketId, setTicketId] = useState("");
@@ -24,12 +27,7 @@ function UserTicket(props){
           headers: { "Authorization": "Bearer " + foundUser.token }
         };
 
-        axios.get(`http://localhost:5000/tickets/user/${foundUser.user._id}`, config).then(res => {
-          console.log(res.data.tickets);
-          setAllTickets(res.data.tickets);
-          }).catch((error) => {
-          history.push("/login");
-        });
+        getTickets(foundUser, config);
 
         axios.get(`http://localhost:5000/tickets/cancelled/${foundUser.user._id}`, config).then(res => {
           console.log(res.data.tickets);
@@ -43,6 +41,44 @@ function UserTicket(props){
         history.push("/login");
       }
   }, [history]);
+
+  function getTickets(foundUser, config){
+    axios.get(`http://localhost:5000/tickets/user/${foundUser.user._id}`, config).then(res => {
+      console.log(res.data.tickets);
+      setAllTodayTickets(res.data.tickets.filter((ticket) => {
+        const temp = ticket.dateOfJourney.split("-");
+        const d = temp[2] + "-" + temp[1] + "-" + temp[0];
+        const obj =  new Date(d);
+        var today = new Date();
+        const diffTime = obj.getTime() - today.getTime();
+        const diffDays = (diffTime / (1000 * 60 * 60 * 24));
+        console.log(diffDays);
+        return diffDays>-1 && diffDays<=0;
+      }));
+      setAllUpcomingTickets(res.data.tickets.filter((ticket) => {
+        const temp = ticket.dateOfJourney.split("-");
+        const d = temp[2] + "-" + temp[1] + "-" + temp[0];
+        const obj =  new Date(d);
+        var today = new Date();
+        const diffTime = obj.getTime() - today.getTime();
+        const diffDays = (diffTime / (1000 * 60 * 60 * 24));
+        console.log(diffDays);
+        return diffDays>0;
+      }));
+      setAllHistoryTickets(res.data.tickets.filter((ticket) => {
+        const temp = ticket.dateOfJourney.split("-");
+        const d = temp[2] + "-" + temp[1] + "-" + temp[0];
+        const obj =  new Date(d);
+        var today = new Date();
+        const diffTime = obj.getTime() - today.getTime();
+        const diffDays = (diffTime / (1000 * 60 * 60 * 24));
+        console.log(diffDays);
+        return diffDays<=-1;
+      }));
+      }).catch((error) => {
+      history.push("/login");
+    });
+  }
 
   function updateAvailableSetats(ticketId, numOfPassengers, dateOfJourney, trainNumber){
     const loggedInUser = localStorage.getItem("userData");
@@ -90,19 +126,33 @@ function UserTicket(props){
 
       const change = { "isCancelled":  true};
       axios.patch(`http://localhost:5000/tickets/${ticketId}`, change, config).then(response => {
-        console.log(response.data);
+        axios.get(`http://localhost:5000/tickets/cancelled/${foundUser.user._id}`, config).then(res => {
+          setCancelledTickets(res.data.tickets);
+          }).catch((error) => {
+          history.push("/login");
+        });
       }).catch((error) => {
         history.push("/login");
       });
-
     }
-
     else{
       history.push("/login");
     }
 
-    setAllTickets((preValues) => {
-      return allTickets.filter((ticket, index) => {
+    setAllTodayTickets((preValues) => {
+      return allTodayTickets.filter((ticket, index) => {
+        return ticket._id !== ticketId;
+      });
+    });
+
+    setAllUpcomingTickets((preValues) => {
+      return allUpcomingTickets.filter((ticket, index) => {
+        return ticket._id !== ticketId;
+      });
+    });
+
+    setAllHistoryTickets((preValues) => {
+      return allHistoryTickets.filter((ticket, index) => {
         return ticket._id !== ticketId;
       });
     });
@@ -112,135 +162,30 @@ function UserTicket(props){
   return (
     <div>
       <Header page="My Tickets"/>
-      <h1 style={{ paddingLeft:"25px", paddingTop:"25px"}}>My Tickets</h1>
-      {allTickets.length<1 && <h5 style={{paddingLeft: "25px"}}>No Tickets</h5>}
-        <div className="table-responsive" style={{padding:"25px"}}>
-        <table className="table table-hover table-danger">
-          <thead>
-            <tr className="table-danger">
-              <th>Train Number</th>
-              <th>Train Name</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Date Of Journey</th>
-              <th>Date Of Booking</th>
-              <th>Passenger Details(Name, Gender, Age)</th>
-              <th>Total Cost</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-        {allTickets.map((ticket, index) => {
-            return (
-        <tbody>
-          <tr className="table-info">
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.trainNumber}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.trainName}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.from}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.to}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.dateOfJourney}</b>
-            </td>
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.dateOfReservation}</b>
-            </td>
-            {ticket.passengers.map((p, index) => {
-                return (
-                <div>
-                  <td>
-                    <b>{p.name}</b>
-                  </td>
-                  <td>
-                    <b>{p.age}</b>
-                  </td>
-                  <td>
-                    <b>{p.gender}</b>
-                  </td>
-                </div>
-              );
-            })}
-            <td rowspan={ticket.passengers.length}>
-              <b>{ticket.cost}</b>
-            </td>
-            <td>
-              <button data-toggle="modal" data-target="#exampleModalCenter" onClick={() => updateAvailableSetats(ticket._id, ticket.passengers.length, ticket.dateOfJourney, ticket.trainNumber)} className="btn btn-sm btn-outline-danger">Cancel Ticket</button>
-            </td>
-          </tr>
-        </tbody>
-      );
-    })}
-    </table>
-    </div>
-    <h1 style={{ paddingLeft:"25px", paddingTop:"25px", color:"#d63031"}}>Cancelled Tickets</h1>
-    {cancelledTickets.length<1 && <h5 style={{paddingLeft: "25px"}}>No Tickets</h5>}
-        {cancelledTickets.map((ticket, index) => {
-            return (
-              <div className="table-responsive" style={{padding:"25px"}}>
-              <table className="table table-hover table-danger">
-                <thead>
-                  <tr className="table-danger">
-                  <th>Train Number</th>
-                  <th>Train Name</th>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Date Of Journey</th>
-                  <th>Date Of Booking</th>
-                  <th>Passenger Details(Name, Gender, Age)</th>
-                  <th>Total Cost</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="table-info">
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.trainNumber}</b>
-                    </td>
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.trainName}</b>
-                    </td>
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.from}</b>
-                    </td>
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.to}</b>
-                    </td>
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.dateOfJourney}</b>
-                    </td>
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.dateOfReservation}</b>
-                    </td>
-                    {ticket.passengers.map((p, index) => {
-                        return (
-                        <div>
-                          <td>
-                            <b>{p.name}</b>
-                          </td>
-                          <td>
-                            <b>{p.age}</b>
-                          </td>
-                          <td>
-                            <b>{p.gender}</b>
-                          </td>
-                        </div>
-                      );
-                    })}
-                    {cancelledTickets.length<1 && <h5 style={{marginLeft: "10px"}}>No Tickets</h5>}
-                    <td rowspan={ticket.passengers.length}>
-                      <b>{ticket.cost}</b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          );
-        })}
+      <TicketTable
+        heading="Todays's Journey"
+        allTickets={allTodayTickets}
+        updateAvailableSetats={updateAvailableSetats}
+        color="#2c3e50"
+      />
+      <TicketTable
+        heading="Upcoming Journey"
+        allTickets={allUpcomingTickets}
+        updateAvailableSetats={updateAvailableSetats}
+        color="#2ecc71"
+      />
+      <TicketTable
+        heading="Journey History"
+        allTickets={allHistoryTickets}
+        updateAvailableSetats={updateAvailableSetats}
+        color="#2c3e50"
+      />
+      <TicketTable
+        heading="Cancelled Tickets"
+        allTickets={cancelledTickets}
+        updateAvailableSetats={updateAvailableSetats}
+        color="#d63031"
+      />
       <div className="modal fade" id="exampleModalCenter">
         <div className="modal-dialog">
           <div className="modal-content">

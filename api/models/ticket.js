@@ -42,14 +42,14 @@ const ticketSchema = mongoose.Schema({
 
 
 function getDate(){
-  let date_ob = new Date();
-  let date = ("0" + date_ob.getDate()).slice(-2);
-  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  let year = date_ob.getFullYear();
-  let hours = date_ob.getHours();
-  let minutes = date_ob.getMinutes();
-  date = year + "-" + month + "-" + date + " " + hours + ":" + minutes ;
-  return date;
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = dd + '-' + mm + '-' + yyyy;
+  return today;
+
 }
 
 

@@ -8,7 +8,7 @@ function SearchTrain(props){
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0
   var yyyy = today.getFullYear();
 
   today = yyyy + "-" + mm + "-" + dd;
@@ -19,6 +19,7 @@ function SearchTrain(props){
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [dateOfJourney, setDateOfJourney] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
       const loggedInUser = localStorage.getItem("userData");
@@ -28,6 +29,8 @@ function SearchTrain(props){
         const config = {
           headers: { "Authorization": "Bearer " + foundUser.token }
         };
+
+        setUserName(foundUser.user.name);
 
         axios.get("http://localhost:5000/stations/", config).then(res => {
           setAllStations(res.data.stations);
@@ -66,12 +69,19 @@ function SearchTrain(props){
       setDateOfJourney("");
     }
     else{
+      const dObj =  new Date(value);
+      console.log(dObj);
+      var today = new Date();
+      console.log(today);
+      const diffTime = dObj.getTime() - today.getTime();
+      const diffDays = (diffTime / (1000 * 60 * 60 * 24));
+      console.log(diffTime + " milliseconds");
+      console.log(diffDays + " days");
       const temp = value.split("-")
       const d = temp[2] + "-" + temp[1] + "-" + temp[0];
       setDateOfJourney(d);
     }
   }
-
 
   function search(){
     history.push({
@@ -83,7 +93,8 @@ function SearchTrain(props){
   return (
     <div>
     <Header page="Home"/>
-    <div className="container" style={{marginTop: "80px"}}>
+    <h1 style={{ padding: "40px", textAlign: "center" }}>Welcome, {userName}</h1>
+    <div className="container" style={{marginTop: "20px"}}>
       <div className="d-flex justify-content-center">
           <div className="card bg-light mb-3">
             <div className="card-header bg-dark">

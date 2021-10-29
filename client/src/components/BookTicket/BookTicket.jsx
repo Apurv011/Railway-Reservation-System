@@ -98,7 +98,7 @@ function bookTicket(){
     });
     axios.post("http://localhost:5000/tickets/", ticket, config).then(response => {
       console.log(response.data);
-      history.push('/login');
+      history.push('/userHome');
     });
 
     setTicket({

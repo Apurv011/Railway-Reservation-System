@@ -48,7 +48,7 @@ function SignUpForm(props){
 
   return (
     <div className="container">
-      <h1 className="text-dark" style={{fontSize:"75px", textAlign:"center", marginTop: "5rem"}}>Sign Up</h1>
+      <h1 className="text-dark" style={{fontSize:"75px", textAlign:"center", marginTop: "3rem"}}>Sign Up</h1>
         <div className="card shadow-lg o-hidden border-0 my-5">
             <div className="card-body p-0">
                 <div className="row">

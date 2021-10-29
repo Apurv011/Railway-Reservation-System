@@ -62,16 +62,16 @@ function ResultTrains(props){
       <h3 className="d-flex justify-content-center">Destination Station: {to}</h3>
     </div>
     <div className="table-responsive">
-    <table className="table table-hover table-warning">
+    <table className="table table-hover bg-dark">
       <thead>
         <tr>
-          <th scope="col">Train Number</th>
-          <th scope="col">Train Name</th>
-          <th scope="col">From</th>
-          <th scope="col">To</th>
-          <th scope="col">Journey Date</th>
-          <th scope="col">Action</th>
-          <th scope="col">Schedule</th>
+          <th style={{color:"#ffffff"}} scope="col">Train Number</th>
+          <th style={{color:"#ffffff"}} scope="col">Train Name</th>
+          <th style={{color:"#ffffff"}} scope="col">From</th>
+          <th style={{color:"#ffffff"}} scope="col">To</th>
+          <th style={{color:"#ffffff"}} scope="col">Date of Journey</th>
+          <th style={{color:"#ffffff"}} scope="col">Action</th>
+          <th style={{color:"#ffffff"}} scope="col">Schedule</th>
         </tr>
       </thead>
     {allTrains.map((train, index) => {

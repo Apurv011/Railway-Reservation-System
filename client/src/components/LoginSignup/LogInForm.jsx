@@ -58,7 +58,7 @@ function LogInForm(){
 
   return (
     <div className="container">
-      <h1 className="text-dark" style={{fontSize:"75px", textAlign:"center", marginTop: "5rem"}}>Log In</h1>
+      <h1 className="text-dark" style={{fontSize:"75px", textAlign:"center", marginTop: "3rem"}}>Log In</h1>
         <div className="row justify-content-center">
             <div className="col-md-9 col-lg-12 col-xl-10">
                 <div className="card shadow-lg o-hidden border-0 my-5">

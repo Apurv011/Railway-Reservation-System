@@ -10,7 +10,6 @@ function TrainSchedule(props){
   const location = useLocation();
   let history = useHistory();
 
-  const [trainId, setTrainId] = useState("");
   const [trainSch, setTrainSch] = useState([]);
   const [trainNumber, setTrainNumber] = useState("");
 
@@ -22,8 +21,6 @@ function TrainSchedule(props){
       const config = {
           headers: { "Authorization": "Bearer " + foundUser.token }
       };
-
-      setTrainId(location.state.trainId);
 
       axios.get(`http://localhost:5000/trains/${location.state.trainId}`, config).then(res => {
         setTrainSch(res.data.schedule);
@@ -53,10 +50,20 @@ function TrainSchedule(props){
                         <ul className={`${styles.timeline}`}>
                         {trainSch.map((station, index) => {
                             return (
-                            <li className={`${styles.event}`} data-date={`${station.AT} - ${station.DT}`}>
-                                <h3>{index===0 ? "Source Station Name" : "Station Name"}</h3>
-                                <p>{station.Station}</p>
-                            </li>
+                            index===0 ?
+                            (<li className={`${styles.event}`} data-date={`Departure at - ${station.DT}`}>
+                              <h3>{"Source Station Name"}</h3>
+                              <p className="mb-1">{station.Station}</p>
+                            </li>) :
+                            index===trainSch.length-1 ?
+                            (<li className={`${styles.event}`} data-date={`Arrival at - ${station.AT}`}>
+                                <h3>{"Destination Station Name"}</h3>
+                                <p className="mb-1">{station.Station}</p>
+                            </li>) :
+                            (<li className={`${styles.event}`} data-date={`${station.AT} - ${station.DT}`}>
+                                <h3>{"Station Name"}</h3>
+                                <p className="mb-1">{station.Station}</p>
+                            </li>)
                             );
                           })}
                         </ul>
