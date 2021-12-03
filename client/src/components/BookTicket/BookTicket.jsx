@@ -10,7 +10,10 @@ function BookTicket(props){
   let history = useHistory();
 
   const [allPassengers, setAllPassengers] = useState([]);
+  const [passengersDetails, setPassengersDetails] = useState([]);
+  const [cancelledSeats, setCancelledSeats] = useState([]);
   const [trainNumber, setTrainNumber] = useState("");
+  const [availableSeats, setAvailableSeats] = useState(0);
   const [trainName, setTrainName] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -38,6 +41,8 @@ function BookTicket(props){
 
       setAllPassengers(location.state.passengers);
       setTrainNumber(location.state.trainNumber);
+      setCancelledSeats(location.state.cancelledSeats);
+      setAvailableSeats(location.state.availableSeats);
       setTrainName(location.state.trainName);
       setFrom(location.state.from);
       setTo(location.state.to);
@@ -46,11 +51,70 @@ function BookTicket(props){
       setCost(location.state.cost*location.state.passengers.length);
       setDateOfJourney(location.state.dateOfJourney);
 
+      getTickets(location.state.passengers, location.state.availableSeats, location.state.cancelledSeats);
+    }
+    else{
+      history.push("/login");
+    }
+  }, [allPassengers, trainName, trainNumber, from, to, atSrc, atDest, cost, dateOfJourney, history]);
+
+  function getTickets(passengers, availableSeats, cancelledSeats){
+    var allPass = [];
+    if(passengers.length <= availableSeats + cancelledSeats.length){
+      if(cancelledSeats.length < passengers.length){
+        if(availableSeats >= passengers.length){
+
+          for(var i=0; i<passengers.length; i++){
+            const map1 = {};
+            var nextNum = 1001 - availableSeats + i;
+//            availableSeats--;
+            map1["name"] = passengers[i].name;
+            map1["age"] = passengers[i].age;
+            map1["gender"] = passengers[i].gender;
+            map1["seat"] = `D${Math.ceil(nextNum/100)}-${nextNum-( 100*(Math.ceil(nextNum/100)-1) )}`;
+            allPass.push(map1);
+          }
+        }
+        else{
+          var j = 0;
+          cancelledSeats.sort();
+          var l = cancelledSeats.length;
+          for(var i=0; i<passengers.length; i++){
+            const map1 = {};
+            var nextNum = cancelledSeats.length>0 ? cancelledSeats[j++] : 1001 - availableSeats + i;
+            map1["name"] = passengers[i].name;
+            map1["age"] = passengers[i].age;
+            map1["gender"] = passengers[i].gender;
+            map1["seat"] = `D${Math.ceil(nextNum/100)}-${nextNum-( 100*(Math.ceil(nextNum/100)-1) )}`;
+            allPass.push(map1);
+          }
+        }
+      }
+      else{
+        var j = 0;
+        cancelledSeats.sort();
+        console.log("AAAAAAAAA");
+        for(var i=0; i<passengers.length; i++){
+          const map1 = {};
+          var nextNum = cancelledSeats[j++];
+          console.log(nextNum);
+          map1["name"] = passengers[i].name;
+          map1["age"] = passengers[i].age;
+          map1["gender"] = passengers[i].gender;
+          map1["seat"] = `D${Math.ceil(nextNum/100)}-${nextNum-( 100*(Math.ceil(nextNum/100)-1) )}`;
+          allPass.push(map1);
+        }
+      }
+      // setCancelledSeats(cancelledSeats);
+      // setPassengersDetails(allPass);
+      // setAvailableSeats(availableSeats);
+      console.log("From Array ");
+      console.log(availableSeats);
       setTicket((preValues) => {
         return {
           ...preValues,
           userId: uId,
-          passengers: allPassengers,
+          passengers: allPass,
           trainName: trainName,
           trainNumber: trainNumber,
           from: from,
@@ -62,11 +126,15 @@ function BookTicket(props){
 
     }
     else{
+      console.log("No Tickets Available!");
       history.push("/login");
     }
-  }, [allPassengers, trainName, trainNumber, from, to, atSrc, atDest, cost, dateOfJourney, history]);
+  }
 
   function cancel(){
+    setCancelledSeats(location.state.cancelledSeats);
+    setAvailableSeats(location.state.availableSeats);
+    setPassengersDetails([]);
     setAllPassengers([]);
     setTrainNumber("");
     setTrainName("");
@@ -88,14 +156,31 @@ function bookTicket(){
     const config = {
         headers: { "Authorization": "Bearer " + foundUser.token }
     };
+    var n;
+    if(cancelledSeats.length < ticket.passengers.length){
+      if(availableSeats >= ticket.passengers.length){
+          n = availableSeats - ticket.passengers.length;
+      }
+      else{
+        n = 0;
+        cancelledSeats.sort();
+        cancelledSeats.splice(0, ticket.passengers.length-availableSeats);
+      }
+    }
+    else{
+      cancelledSeats.sort();
+      cancelledSeats.splice(0, ticket.passengers.length);
+    }
 
-    let n = location.state.availableSeats - allPassengers.length;
-    const update = { "availableSeats":  n};
+    const update = { "availableSeats":  n, "cancelledSeats": cancelledSeats};
     console.log(update);
 
     axios.patch(`http://localhost:5000/seats/${location.state.seatId}`, update, config).then(response => {
       console.log(response.data);
     });
+    console.log("ZZ");
+    console.log(ticket.passengers);
+
     axios.post("http://localhost:5000/tickets/", ticket, config).then(response => {
       console.log(response.data);
       history.push('/userHome');

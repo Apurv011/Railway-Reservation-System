@@ -21,6 +21,7 @@ function TrainInfo(props){
   const [destDist, setDestDist] = useState("");
   const [dateOfJourney, setDateOfJourney] = useState("");
   const [availableSeats, setAvailableSeats] = useState(0);
+  const [cancelledSeats, setCancelledSeats] = useState([]);
   const [seatId, setSeatId] = useState("");
 
   useEffect(() => {
@@ -41,7 +42,8 @@ function TrainInfo(props){
       setDateOfJourney(location.state.dateOfJourney);
 
       axios.get(`http://localhost:5000/seats/${location.state.trainNumber}/${d}`, config).then(res => {
-          setAvailableSeats(res.data.seats[0].availableSeats);
+          setAvailableSeats(parseInt(res.data.seats[0].availableSeats));
+          setCancelledSeats(res.data.seats[0].cancelledSeats);
           setSeatId(res.data.seats[0]._id);
         }).catch((error) => {
         history.push("/login");
@@ -82,7 +84,7 @@ function TrainInfo(props){
           pathname: '/addPassengers',
           state: { trainId: trainId, trainName: trainData.trainName, trainNumber: trainData.trainNumber,
                   from: from, to: to, cost:(destDist - srcDist)*3, atSrc: sourceAT, atDest: destAT,
-                  dateOfJourney: dateOfJourney, seatId: seatId, availableSeats: availableSeats }
+                  dateOfJourney: dateOfJourney, seatId: seatId, availableSeats: availableSeats, cancelledSeats: cancelledSeats }
       });
   }
 
@@ -193,7 +195,7 @@ function TrainInfo(props){
                       <label htmlFor="inputState">Available Seats</label>
                     </h4>
                     <h3 className="d-flex justify-content-center">
-                      <b>{availableSeats}</b>
+                      <b>{parseInt(availableSeats) + parseInt(cancelledSeats.length)}</b>
                     </h3>
                   </div>
 

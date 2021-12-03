@@ -4,7 +4,7 @@ const Seat = require('../models/seats');
 exports.getAllSeats = (req, res, next) => {
   Seat
       .find()
-      .select('_id trainNumber availableSeats date')
+      .select('_id trainNumber availableSeats cancelledSeats date')
       .exec()
       .then(seats => {
           res.status(200).json({
@@ -23,6 +23,7 @@ exports.AddSeats = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         trainNumber: req.body.trainNumber,
         availableSeats: req.body.availableSeats,
+        cancelledSeats: req.body.cancelledSeats,
         date: req.body.date
     })
     .save()
@@ -69,7 +70,7 @@ exports.getOneSeat = (req, res, next) => {
     const seatId = req.params.seatId;
     Seat
         .findById(seatId)
-        .select('_id trainNumber availableSeats date')
+        .select('_id trainNumber availableSeats cancelledSeats date')
         .exec()
         .then(result => {
             if(!result){
@@ -126,7 +127,7 @@ exports.getSeatByTrainDate = (req, res, next) => {
 	  const date = req.params.date;
     Seat
         .find({$and: [ { trainNumber: trainNumber }, { date: date } ]})
-        .select('_id trainNumber availableSeats date')
+        .select('_id trainNumber availableSeats cancelledSeats date')
         .exec()
         .then(result => {
             if(!result){

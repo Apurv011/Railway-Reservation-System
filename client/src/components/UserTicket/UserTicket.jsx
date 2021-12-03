@@ -7,6 +7,7 @@ import TicketTable from "./TicketTable";
 function UserTicket(props){
 
   const [allTodayTickets, setAllTodayTickets] = useState([]);
+  const [cancelledSeats, setCancelledSeats] = useState([]);
   const [allUpcomingTickets, setAllUpcomingTickets] = useState([]);
   const [allHistoryTickets, setAllHistoryTickets] = useState([]);
   const [cancelledTickets, setCancelledTickets] = useState([]);
@@ -80,7 +81,7 @@ function UserTicket(props){
     });
   }
 
-  function updateAvailableSetats(ticketId, numOfPassengers, dateOfJourney, trainNumber){
+  function updateAvailableSetats(ticketId, passengers, dateOfJourney, trainNumber){
     const loggedInUser = localStorage.getItem("userData");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
@@ -94,12 +95,13 @@ function UserTicket(props){
       setDate(d);
       setTrainNum(trainNumber);
       setTicketId(ticketId);
-      setNumOfPsg(numOfPassengers);
-      axios.get(`http://localhost:5000/seats/${trainNumber}/${d}`, config).then(res => {
-          setAvailableSeats(res.data.seats[0].availableSeats);
-        }).catch((error) => {
-        history.push("/login");
-      });
+      var ls = [];
+      for(var i=0; i<passengers.length; i++){
+        var num = (parseInt(passengers[i].seat.split('-')[0].substring(1)) - 1)*100 + parseInt(passengers[i].seat.split('-')[1]);
+        ls.push(num);
+        console.log(num);
+       }
+       setCancelledSeats(ls);
     }
   }
 
@@ -115,7 +117,7 @@ function UserTicket(props){
 
       console.log(availableSeats);
       let n = availableSeats + numOfPsg;
-      const update = { "availableSeats":  n};
+      const update = { "cancelledSeats":  cancelledSeats};
       console.log(update);
 
       axios.patch(`http://localhost:5000/seats/train/${trainNum}/${date}`, update, config).then(response => {

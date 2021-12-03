@@ -16,7 +16,7 @@ function TicketTable(props){
               <th style={{color:"#ffffff"}}>To</th>
               <th style={{color:"#ffffff"}}>Date Of Journey</th>
               <th style={{color:"#ffffff"}}>Date Of Booking</th>
-              <th style={{color:"#ffffff"}}>Passenger Details(Name, Gender, Age)</th>
+              <th style={{color:"#ffffff"}}>Passenger Details</th>
               <th style={{color:"#ffffff"}}>Total Cost</th>
               {
               props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" &&
@@ -46,27 +46,33 @@ function TicketTable(props){
             <td rowspan={ticket.passengers.length}>
               <b>{ticket.dateOfReservation}</b>
             </td>
-            {ticket.passengers.map((p, index) => {
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Gender</th>
+                  {props.heading!=="Cancelled Tickets" && <th scope="col">Seat</th>}
+                </tr>
+              </thead>
+              {ticket.passengers.map((p, index) => {
                 return (
-                <div>
-                  <td>
-                    <b>{p.name}</b>
-                  </td>
-                  <td>
-                    <b>{p.age}</b>
-                  </td>
-                  <td>
-                    <b>{p.gender}</b>
-                  </td>
-                </div>
-              );
-            })}
-
+                  <tbody>
+                    <tr>
+                      <td scope="row">{p.name}</td>
+                      <td>{p.age}</td>
+                      <td>{p.gender}</td>
+                      {props.heading!=="Cancelled Tickets" && <td>{p.seat}</td>}
+                    </tr>
+                  </tbody>
+                );
+              })}
+            </table>
             <td rowspan={ticket.passengers.length}>
               <b>{ticket.cost}</b>
             </td>
             {props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" && <td>
-              <button data-toggle="modal" data-target="#exampleModalCenter" onClick={() => props.updateAvailableSetats(ticket._id, ticket.passengers.length, ticket.dateOfJourney, ticket.trainNumber)} className="btn btn-sm btn-outline-danger">Cancel Ticket</button>
+              <button data-toggle="modal" data-target="#exampleModalCenter" onClick={() => props.updateAvailableSetats(ticket._id, ticket.passengers, ticket.dateOfJourney, ticket.trainNumber)} className="btn btn-sm btn-outline-danger">Cancel Ticket</button>
             </td>
             }
           </tr>

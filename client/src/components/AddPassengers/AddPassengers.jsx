@@ -53,7 +53,7 @@ function AddPassengers(props){
           state: { trainId: location.state.trainId, trainName: location.state.trainName, trainNumber: location.state.trainNumber,
                   from: location.state.from, to: location.state.to, cost: location.state.cost, passengers: allPassengers,
                   atSrc: location.state.atSrc, atDest: location.state.atDest, seatId: location.state.seatId,
-                  dateOfJourney: location.state.dateOfJourney, availableSeats: location.state.availableSeats }
+                  dateOfJourney: location.state.dateOfJourney, availableSeats: location.state.availableSeats, cancelledSeats: location.state.cancelledSeats }
       });
   }
 
@@ -81,12 +81,12 @@ function AddPassengers(props){
 
   return (
     <div>
-      <Header />
+      <Header/>
       <div className="d-flex justify-content-center" style={{paddingTop: "30px"}}>
         <div className="d-flex justify-content-center">
           <div className="card bg-light mb-3">
-            <div className="card-header">
-              <h3 className="d-flex justify-content-center">
+            <div className="card-header bg-dark">
+              <h3 style={{color: "#ffffff"}} className="d-flex justify-content-center">
                 Add Passenger Information
               </h3>
             </div>
@@ -101,7 +101,7 @@ function AddPassengers(props){
                     </div>
                     <div className="col">
                       <label htmlFor="gender">Passenger Age</label>
-                      <input onChange={handleChange} className="form-control form-control-user" type="number" id="exampleFirstName" name="age" value={passenger.age} />
+                      <input onChange={handleChange} className="form-control form-control-user" type="number" id="exampleFirstName" name="age" placeholder="Age" min="0" value={passenger.age} />
                     </div>
                   </div>
                   <br />

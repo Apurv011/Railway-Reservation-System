@@ -4,6 +4,7 @@ const seatSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     trainNumber: {type: String},
     availableSeats: {type: String},
+    cancelledSeats: {type: Array},
     date: {type: String}
 });
 
