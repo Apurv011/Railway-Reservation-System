@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import CaptchaTextGenerator from 'captcha-text-generator';
 
 function LogInForm(){
 
+  const location = useLocation();
   let history = useHistory();
 
   const [user, setUser] = useState({
@@ -12,27 +13,44 @@ function LogInForm(){
       password:""
   });
 
+  useEffect(() => console.log(location.state) );
+
   const [captcha, setCaptcha] = useState("");
   const [captchaVal, setCaptchaVal] = useState("");
 
   function loginUser(event) {
     if(captcha===captchaVal){
-      axios.post("http://localhost:5000/user/login", user).then(response => {
-            console.log(response.data);
-            localStorage.clear();
-            localStorage.setItem('userData', JSON.stringify(response.data));
-            history.push('/searchTrain');
-      });
 
-      setUser({
-        email: "",
-        password:""
-      });
-    }
+        axios.post("http://localhost:5000/user/login", user).then(response => {
+              localStorage.setItem('userData', JSON.stringify(response.data));
+              if(location.state){
+                history.push({
+                      pathname: '/addPassengers',
+                      state: { trainId: location.state.trainId, trainName: location.state.trainName, trainNumber: location.state.trainNumber,
+                              from: location.state.from, to: location.state.to, cost:location.state.cost, atSrc: location.state.atSrc, atDest: location.state.atDest,
+                              dateOfJourney: location.state.dateOfJourney, seatId: location.state.seatId, availableSeats: location.state.availableSeats, cancelledSeats: location.state.cancelledSeats }
+                  });
+              }
+              else{
+                history.push({
+                      pathname: '/searchTrain',
+                      state: { guest: false}
+                  });
+              }
+        });
+
+        setUser({
+          email: "",
+          password:""
+        });
+      }
+
+//  }
     else{
       alert("Invalid Captcha!");
       window.location.reload();
     }
+
     event.preventDefault();
 
   }
@@ -48,7 +66,6 @@ function LogInForm(){
   }
 
   function handleCaptchaChange(event){
-      console.log(event.target.value);
       setCaptcha(event.target.value);
   }
 

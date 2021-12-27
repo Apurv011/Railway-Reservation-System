@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 
 
 function SearchTrain(props){
+
+  const location = useLocation();
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -22,26 +24,30 @@ function SearchTrain(props){
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-      const loggedInUser = localStorage.getItem("userData");
-      if (loggedInUser) {
-        const foundUser = JSON.parse(loggedInUser);
+       const loggedInUser = localStorage.getItem("userData");
+       if (loggedInUser) {
+         const foundUser = JSON.parse(loggedInUser);
 
-        const config = {
-          headers: { "Authorization": "Bearer " + foundUser.token }
-        };
+         const config = {
+           headers: { "Authorization": "Bearer " + foundUser.token }
+         };
 
-        setUserName(foundUser.user.name);
+         setUserName(foundUser.user.name);
 
-        axios.get("http://localhost:5000/stations/", config).then(res => {
-          setAllStations(res.data.stations);
-          }).catch((error) => {
-          history.push("/login");
-        });
-      }
-      else{
-        history.push("/login");
-      }
-  }, [history]);
+         axios.get("http://localhost:5000/stations/").then(res => {
+           setAllStations(res.data.stations);
+           }).catch((error) => {
+           history.push("/login");
+         });
+       }
+       else{
+         axios.get("http://localhost:5000/stations/").then(res => {
+           setAllStations(res.data.stations);
+           }).catch((error) => {
+           history.push("/login");
+         });
+       }
+   }, [history]);
 
   function updateFrom(event) {
     const value = event.target.value;
@@ -86,14 +92,14 @@ function SearchTrain(props){
   function search(){
     history.push({
           pathname: '/resultTrains',
-          state: { from: from, to: to, dateOfJourney: dateOfJourney}
+          state: { from: from, to: to, dateOfJourney: dateOfJourney, guest: location.state.guest}
       });
   }
 
   return (
     <div>
-    <Header page="Home"/>
-    <h1 style={{ padding: "40px", textAlign: "center" }}>Welcome, {userName}</h1>
+    <Header guest={location.state.guest} page="Home"/>
+    <h1 style={{ padding: "40px", textAlign: "center" }}>{location.state.guest===true ? `Welcome` : `Welcome, ${userName}`}</h1>
     <div className="container" style={{marginTop: "20px"}}>
       <div className="d-flex justify-content-center">
           <div className="card bg-light mb-3">

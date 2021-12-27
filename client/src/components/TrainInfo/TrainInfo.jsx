@@ -32,65 +32,77 @@ function TrainInfo(props){
       const config = {
           headers: { "Authorization": "Bearer " + foundUser.token }
       };
-
-      const temp = location.state.dateOfJourney.split("-")
-      const d = temp[0] + "%2F" + temp[1] + "%2F" + temp[2];
-
-      setTrainId(location.state.trainId);
-      setFrom(location.state.from);
-      setTo(location.state.to);
-      setDateOfJourney(location.state.dateOfJourney);
-
-      axios.get(`http://localhost:5000/seats/${location.state.trainNumber}/${d}`, config).then(res => {
-          setAvailableSeats(parseInt(res.data.seats[0].availableSeats));
-          setCancelledSeats(res.data.seats[0].cancelledSeats);
-          setSeatId(res.data.seats[0]._id);
-        }).catch((error) => {
-        history.push("/login");
-      });
-
-      axios.get(`http://localhost:5000/trains/${location.state.trainId}`, config).then(res => {
-          console.log(res.data);
-          for(let i=0; i<res.data.schedule.length; i++){
-            if(res.data.schedule[i].Station === location.state.from) {
-                setSourceAT(res.data.schedule[i].AT);
-                setSourceDT(res.data.schedule[i].DT);
-                setSrcDist(res.data.stations[i].Distance);
-                break;
-              }
-          }
-          for(let i=0; i<res.data.schedule.length; i++){
-            if(res.data.schedule[i].Station === location.state.to) {
-                setDestAT(res.data.schedule[i].AT);
-                setDestDT(res.data.schedule[i].DT);
-                setDestDist(res.data.stations[i].Distance);
-                break;
-              }
-          }
-          setTrainData(res.data);
-
-        }).catch((error) => {
-        history.push("/login");
-      });
-
+      getData();
     }
     else{
-      history.push("/login");
+      getData();
     }
   }, [location.state.trainId, location.state.from, location.state.to, location.state.dateOfJourney, location.state.trainNumber, history]);
 
+  function getData(){
+    const temp = location.state.dateOfJourney.split("-")
+    const d = temp[0] + "%2F" + temp[1] + "%2F" + temp[2];
+
+    setTrainId(location.state.trainId);
+    setFrom(location.state.from);
+    setTo(location.state.to);
+    setDateOfJourney(location.state.dateOfJourney);
+
+    axios.get(`http://localhost:5000/seats/${location.state.trainNumber}/${d}`).then(res => {
+        setAvailableSeats(parseInt(res.data.seats[0].availableSeats));
+        setCancelledSeats(res.data.seats[0].cancelledSeats);
+        setSeatId(res.data.seats[0]._id);
+      }).catch((error) => {
+      history.push("/login");
+    });
+
+    axios.get(`http://localhost:5000/trains/${location.state.trainId}`).then(res => {
+        console.log(res.data);
+        for(let i=0; i<res.data.schedule.length; i++){
+          if(res.data.schedule[i].Station === location.state.from) {
+              setSourceAT(res.data.schedule[i].AT);
+              setSourceDT(res.data.schedule[i].DT);
+              setSrcDist(res.data.stations[i].Distance);
+              break;
+            }
+        }
+        for(let i=0; i<res.data.schedule.length; i++){
+          if(res.data.schedule[i].Station === location.state.to) {
+              setDestAT(res.data.schedule[i].AT);
+              setDestDT(res.data.schedule[i].DT);
+              setDestDist(res.data.stations[i].Distance);
+              break;
+            }
+        }
+        setTrainData(res.data);
+
+      }).catch((error) => {
+      history.push("/login");
+    });
+  }
+
   function goToAddPassenger(){
-    history.push({
-          pathname: '/addPassengers',
-          state: { trainId: trainId, trainName: trainData.trainName, trainNumber: trainData.trainNumber,
-                  from: from, to: to, cost:(destDist - srcDist)*3, atSrc: sourceAT, atDest: destAT,
-                  dateOfJourney: dateOfJourney, seatId: seatId, availableSeats: availableSeats, cancelledSeats: cancelledSeats }
-      });
+    if(location.state.guest===true){
+      history.push({
+        pathname: '/login',
+        state: { trainId: trainId, trainName: trainData.trainName, trainNumber: trainData.trainNumber,
+                from: from, to: to, cost:(destDist - srcDist)*3, atSrc: sourceAT, atDest: destAT,
+                dateOfJourney: dateOfJourney, seatId: seatId, availableSeats: availableSeats, cancelledSeats: cancelledSeats }
+        });
+    }
+    else{
+      history.push({
+            pathname: '/addPassengers',
+            state: { trainId: trainId, trainName: trainData.trainName, trainNumber: trainData.trainNumber,
+                    from: from, to: to, cost:(destDist - srcDist)*3, atSrc: sourceAT, atDest: destAT,
+                    dateOfJourney: dateOfJourney, seatId: seatId, availableSeats: availableSeats, cancelledSeats: cancelledSeats }
+        });
+    }
   }
 
   return (
     <div>
-    <Header/>
+    <Header guest={location.state.guest}/>
     <div className="d-flex justify-content-center" style={{marginTop: "80px"}}>
         <div className="card bg-light mb-3">
           <div className="card-header bg-dark">

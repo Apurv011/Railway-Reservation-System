@@ -28,34 +28,43 @@ function ResultTrains(props){
 
       setDateOfJourney(location.state.dateOfJourney);
 
-      axios.get(`http://localhost:5000/trains/stations/${location.state.from}/${location.state.to}`, config).then(res => {
+      axios.get(`http://localhost:5000/trains/stations/${location.state.from}/${location.state.to}`).then(res => {
         setAllTrains(res.data);
         }).catch((error) => {
         history.push("/login");
       });
     }
     else{
-      history.push("/login");
+      setFrom(location.state.from);
+      setTo(location.state.to);
+
+      setDateOfJourney(location.state.dateOfJourney);
+
+      axios.get(`http://localhost:5000/trains/stations/${location.state.from}/${location.state.to}`).then(res => {
+        setAllTrains(res.data);
+        }).catch((error) => {
+        history.push("/login");
+      });
     }
   }, [location.state.from, location.state.to, location.state.dateOfJourney, history]);
 
   function proceed(trainId, trainNumber){
     history.push({
           pathname: '/trainInfo',
-          state: { trainId: trainId, from: from, to: to, dateOfJourney: dateOfJourney,  trainNumber: trainNumber}
+          state: { trainId: trainId, from: from, to: to, dateOfJourney: dateOfJourney,  trainNumber: trainNumber, guest: location.state.guest}
       });
   }
 
   function schedule(trainId, trainNumber){
     history.push({
           pathname: '/trainSchedule',
-          state: { trainId: trainId, from: from, to: to, dateOfJourney: dateOfJourney,  trainNumber: trainNumber}
+          state: { trainId: trainId, from: from, to: to, dateOfJourney: dateOfJourney,  trainNumber: trainNumber, guest: location.state.guest}
       });
   }
 
   return (
     <div>
-    <Header />
+    <Header guest={location.state.guest}/>
     <div className="container">
     <div className="container" style={{padding:"30px"}}>
       <h3 className="d-flex justify-content-center">Source Station: {from}</h3>

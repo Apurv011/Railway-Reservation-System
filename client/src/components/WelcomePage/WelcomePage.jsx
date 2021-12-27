@@ -6,11 +6,18 @@ function WelcomePage() {
   let history = useHistory();
 
   function login() {
-    history.push("/login");
+      history.push("/login");
   }
 
   function signup() {
     history.push("/signup");
+  }
+
+  function guest() {
+    history.push({
+          pathname: '/searchTrain',
+          state: { guest: true}
+      });
   }
 
   return (
@@ -31,10 +38,13 @@ function WelcomePage() {
         <div onClick={signup} style={{marginBottom: "20px", marginRight:"5px" }} className={styles.btn}>
           Signup
         </div>
-        <div onClick={login} style={{ marginBottom: "40px", marginLeft:"5px" }} className={styles.btn}>
+        <div onClick={login} style={{ marginBottom: "30px", marginLeft:"5px" }} className={styles.btn}>
           Login
         </div>
       </div>
+      <div className="text-center">
+      <button type="button" onClick={guest} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Continue As a Guest</strong></button>
+    </div>
     </div>
   );
 }

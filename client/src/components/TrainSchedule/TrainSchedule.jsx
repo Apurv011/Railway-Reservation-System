@@ -22,7 +22,7 @@ function TrainSchedule(props){
           headers: { "Authorization": "Bearer " + foundUser.token }
       };
 
-      axios.get(`http://localhost:5000/trains/${location.state.trainId}`, config).then(res => {
+      axios.get(`http://localhost:5000/trains/${location.state.trainId}`).then(res => {
         setTrainSch(res.data.schedule);
         setTrainNumber(res.data.trainNumber);
         }).catch((error) => {
@@ -30,13 +30,18 @@ function TrainSchedule(props){
       });
     }
     else{
-      history.push("/login");
+      axios.get(`http://localhost:5000/trains/${location.state.trainId}`).then(res => {
+        setTrainSch(res.data.schedule);
+        setTrainNumber(res.data.trainNumber);
+        }).catch((error) => {
+        history.push("/login");
+      });
     }
   }, [location.state.trainId, history]);
 
   return (
     <div>
-    <Header />
+    <Header guest={location.state.guest}/>
     <div style={{paddingTop: "40px"}}>
       <h1 style={{textAlign: "center"}}>Train Schedule</h1>
       <h3 style={{textAlign: "center"}}>Train Number: {trainNumber}</h3>

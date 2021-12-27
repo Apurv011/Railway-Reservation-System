@@ -4,15 +4,15 @@ const checkAuth = require('../middleware/check-auth');
 
 const SeatsController = require('../controllers/seats');
 
-router.get('/', checkAuth, SeatsController.getAllSeats);
+router.get('/', SeatsController.getAllSeats);
 
 router.post('/', checkAuth, SeatsController.AddSeats);
 
-router.get('/:trainNumber/:date', checkAuth, SeatsController.getSeatByTrainDate);
+router.get('/:trainNumber/:date', SeatsController.getSeatByTrainDate);
 
-router.get('/:seatId', checkAuth, SeatsController.getOneSeat);
+router.get('/:seatId', SeatsController.getOneSeat);
 
-router.patch('/:seatId', checkAuth, SeatsController.editOneSeat);
+router.patch('/:seatId', SeatsController.editOneSeat);
 
 router.patch('/train/:trainNumber/:date', checkAuth, SeatsController.editOneSeatByTrain);
 

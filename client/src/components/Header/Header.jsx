@@ -15,7 +15,10 @@ function Header(props){
   }
 
   function searchPage(){
-    history.push('/searchTrain');
+    history.push({
+        pathname: '/searchTrain',
+        state: { guest: props.guest}
+    });
   }
 
   function userHome(){
@@ -30,6 +33,7 @@ function Header(props){
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
+        {props.guest!==true &&
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             {props.page!=="Home" && <button onClick={searchPage} className="nav-link btn btn-link">Home</button> }
@@ -44,6 +48,7 @@ function Header(props){
             <button onClick={logout} className="nav-link btn btn-link">Logout</button>
           </li>
         </ul>
+      }
       </div>
     </nav>
   </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import { useLocation, useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 
 function AddPassengers(props){
@@ -9,6 +8,7 @@ function AddPassengers(props){
   let history = useHistory();
 
   useEffect(() => {
+
     const loggedInUser = localStorage.getItem("userData");
     if (!loggedInUser || !location.state) {
       history.push("/login");

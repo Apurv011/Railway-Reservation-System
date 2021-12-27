@@ -4,13 +4,13 @@ const checkAuth = require('../middleware/check-auth');
 
 const TrainsController = require('../controllers/trains');
 
-router.get('/', checkAuth, TrainsController.getAllTrains);
+router.get('/', TrainsController.getAllTrains);
 
 router.post('/', checkAuth, TrainsController.createNewTrain);
 
-router.get('/:trainId', checkAuth, TrainsController.getOneTrain);
+router.get('/:trainId', TrainsController.getOneTrain);
 
-router.get('/stations/:from/:to', checkAuth, TrainsController.getStationsTrains);
+router.get('/stations/:from/:to', TrainsController.getStationsTrains);
 
 router.patch('/:trainId', checkAuth, TrainsController.updateOneTrain);
 
