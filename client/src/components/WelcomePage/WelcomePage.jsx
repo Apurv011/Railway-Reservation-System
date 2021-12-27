@@ -2,7 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./WelcomePage.module.css";
 
-function WelcomePage() {
+const WelcomePage = React.forwardRef((props, ref) => {
+
   let history = useHistory();
 
   function login() {
@@ -21,7 +22,7 @@ function WelcomePage() {
   }
 
   return (
-    <div className={`${styles.center}`}>
+    <div ref={ref} className={`${styles.center}`}>
       <h1
         className="text-dark"
         style={{ textAlign: "center", fontSize: "75px" }}
@@ -47,6 +48,6 @@ function WelcomePage() {
     </div>
     </div>
   );
-}
+});
 
 export default WelcomePage;

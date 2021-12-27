@@ -4,7 +4,7 @@ const Ticket = require('../models/ticket');
 exports.getAllTickets = (req, res, next) => {
     Ticket
         .find()
-        .select('_id userId passengers isCancelled dateOfReservation dateOfJourney trainName trainNumber from to cost')
+        .select('_id userId atSrc atDest passengers isCancelled dateOfReservation dateOfJourney trainName trainNumber from to cost')
         .exec()
         .then(tickets => {
             res.status(200).json({
@@ -29,6 +29,8 @@ exports.bookOneTicket = (req, res, next) => {
         dateOfJourney: req.body.dateOfJourney,
         from: req.body.from,
         to: req.body.to,
+        atSrc: req.body.atSrc,
+        atDest: req.body.atDest,
         cost: req.body.cost
     })
     .save()
@@ -75,7 +77,7 @@ exports.getOneTicket = (req, res, next) => {
     const ticketId = req.params.ticketId;
     Ticket
         .findById(ticketId)
-        .select('_id userId passengers dateOfJourney dateOfReservation trainName trainNumber from to cost')
+        .select('_id userId atSrc atDest passengers dateOfJourney dateOfReservation trainName trainNumber from to cost')
         .exec()
         .then(ticket => {
             return res.status(201).json(ticket);
@@ -89,7 +91,7 @@ exports.getTicketsByUserId = (req, res, next) => {
     const userId = req.params.userId;
     Ticket
         .find({$and: [ {userId: userId}, {isCancelled: false} ]})
-        .select('_id userId passengers dateOfJourney isCancelled dateOfReservation trainName trainNumber from to cost')
+        .select('_id userId atSrc atDest passengers dateOfJourney isCancelled dateOfReservation trainName trainNumber from to cost')
         .exec()
         .then(ticket => {
             return res.status(201).json({
@@ -124,7 +126,7 @@ exports.getCancelledTicketsByUserId = (req, res, next) => {
 
     Ticket
         .find({$and: [ { userId: userId }, { isCancelled: true } ]})
-        .select('_id userId passengers dateOfJourney dateOfReservation trainName trainNumber from to cost')
+        .select('_id userId atSrc atDest passengers dateOfJourney dateOfReservation trainName trainNumber from to cost')
         .exec()
         .then(ticket => {
             return res.status(201).json({

@@ -6,6 +6,8 @@ const ticketSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,
     passengers: Array,
+    atSrc: String,
+    atDest: String,
     dateOfReservation: {
       type: String,
       default: date

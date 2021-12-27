@@ -10,6 +10,7 @@ import UserTicket from "./UserTicket/UserTicket";
 import TrainSchedule from "./TrainSchedule/TrainSchedule";
 import WelcomePage from "./WelcomePage/WelcomePage";
 import UserHome from "./UserHome/UserHome";
+import Print from "./PrintTicket/Print";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
@@ -56,9 +57,12 @@ function App() {
         <TrainSchedule />
       </Route>
 
-
       <Route path="/myTickets" exact>
         <UserTicket />
+      </Route>
+
+      <Route path="/print" exact>
+        <Print />
       </Route>
 
     </Router>

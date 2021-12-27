@@ -30,6 +30,8 @@ function BookTicket(props){
     trainNumber: "",
     from: "",
     to: "",
+    atSrc: "",
+    atDest: "",
     cost: ""
   });
 
@@ -93,7 +95,6 @@ function BookTicket(props){
       else{
         var j = 0;
         cancelledSeats.sort();
-        console.log("AAAAAAAAA");
         for(var i=0; i<passengers.length; i++){
           const map1 = {};
           var nextNum = cancelledSeats[j++];
@@ -120,6 +121,8 @@ function BookTicket(props){
           from: from,
           to: to,
           cost: cost,
+          atSrc: location.state.atSrc,
+          atDest: location.state.atDest,
           dateOfJourney: dateOfJourney
         };
       });
@@ -173,16 +176,12 @@ function bookTicket(){
     }
 
     const update = { "availableSeats":  n, "cancelledSeats": cancelledSeats};
-    console.log(update);
 
     axios.patch(`http://localhost:5000/seats/${location.state.seatId}`, update, config).then(response => {
       console.log(response.data);
     });
-    console.log("ZZ");
-    console.log(ticket.passengers);
 
     axios.post("http://localhost:5000/tickets/", ticket, config).then(response => {
-      console.log(response.data);
       history.push('/userHome');
     });
 
@@ -194,6 +193,8 @@ function bookTicket(){
         from: "",
         to: "",
         cost: "",
+        atSrc: "",
+        atDest: "",
         dateOfJourney: ""
     });
 

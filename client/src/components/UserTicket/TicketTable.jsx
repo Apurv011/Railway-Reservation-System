@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 
 function TicketTable(props){
+
+  let history = useHistory();
+
   return (
     <div>
       <h1 style={{ paddingLeft:"25px", paddingTop:"25px", color: props.color }}>{props.heading}</h1>
@@ -20,11 +24,15 @@ function TicketTable(props){
               <th style={{color:"#ffffff"}}>Total Cost</th>
               {
               props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" &&
-              <th style={{color:"#ffffff"}}>Action</th>
+              <th style={{color:"#ffffff"}}>Print Ticket</th>
+              }
+              {
+              props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" &&
+              <th style={{color:"#ffffff"}}>Cancel Ticket</th>
               }
             </tr>
           </thead>
-        {props.allTickets.map((ticket, index) => {
+        {props.allTickets.reverse().map((ticket, index) => {
             return (
         <tbody>
           <tr className="table-info">
@@ -71,6 +79,18 @@ function TicketTable(props){
             <td rowspan={ticket.passengers.length}>
               <b>{ticket.cost}</b>
             </td>
+            {props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" && <td>
+              <button data-toggle="modal" data-target="#exampleModalCenter"
+              onClick={() => {
+                history.push({
+                  pathname: '/print',
+                  state: { ticket: ticket}
+                });
+              }
+              }
+              className="btn btn-sm btn-outline-dark">Print Ticket</button>
+            </td>
+            }
             {props.heading!=="Journey History" && props.heading!=="Cancelled Tickets" && <td>
               <button data-toggle="modal" data-target="#exampleModalCenter" onClick={() => props.updateAvailableSetats(ticket._id, ticket.passengers, ticket.dateOfJourney, ticket.trainNumber)} className="btn btn-sm btn-outline-danger">Cancel Ticket</button>
             </td>
