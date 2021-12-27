@@ -40,7 +40,6 @@ function BookTicket(props){
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUId(foundUser.user._id);
-
       setAllPassengers(location.state.passengers);
       setTrainNumber(location.state.trainNumber);
       setCancelledSeats(location.state.cancelledSeats);
@@ -52,13 +51,32 @@ function BookTicket(props){
       setAtDest(location.state.atDest);
       setCost(location.state.cost*location.state.passengers.length);
       setDateOfJourney(location.state.dateOfJourney);
-
       getTickets(location.state.passengers, location.state.availableSeats, location.state.cancelledSeats);
     }
     else{
       history.push("/login");
     }
   }, [allPassengers, trainName, trainNumber, from, to, atSrc, atDest, cost, dateOfJourney, history]);
+
+  async function displayRazorpay(amt) {
+    var body = {amt: amt};
+    axios.post("http://localhost:5000/payment/razorpay", body).then(response => {
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        currency: response.data.currency,
+        amount: response.data.amount,
+        name: "Reservation System",
+        description: "Pay and book your ticket",
+        order_id: response.data.id,
+        handler: function (res) {
+          alert("Payment Successful!");
+          history.push('/userHome');
+        },
+      };
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    });
+  }
 
   function getTickets(passengers, availableSeats, cancelledSeats){
     var allPass = [];
@@ -147,7 +165,7 @@ function BookTicket(props){
     setAtDest("");
     setCost("");
     setDateOfJourney("");
-    history.push("/searchTrain");
+    history.push("/userHome");
   }
 
 function bookTicket(){
@@ -182,7 +200,7 @@ function bookTicket(){
     });
 
     axios.post("http://localhost:5000/tickets/", ticket, config).then(response => {
-      history.push('/userHome');
+      displayRazorpay(cost);
     });
 
     setTicket({

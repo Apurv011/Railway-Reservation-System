@@ -9,6 +9,7 @@ const ticketRoutes = require('./api/routes/tickets');
 const userRoutes = require('./api/routes/user');
 const stationRoutes = require('./api/routes/stations');
 const seatRoutes = require('./api/routes/seats');
+const paymentRoutes = require('./api/routes/payment');
 
 mongoose.connect(process.env.MONGO_URL_DEV, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -40,6 +41,7 @@ app.use('/tickets', ticketRoutes);
 app.use('/user', userRoutes);
 app.use('/stations', stationRoutes);
 app.use('/seats', seatRoutes);
+app.use('/payment', paymentRoutes);
 
 // Handle Error Requests
 app.use((req, res, next) => {

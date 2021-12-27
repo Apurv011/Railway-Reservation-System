@@ -32,7 +32,7 @@ function TicketTable(props){
               }
             </tr>
           </thead>
-        {props.allTickets.reverse().map((ticket, index) => {
+        {props.allTickets.map((ticket, index) => {
             return (
         <tbody>
           <tr className="table-info">
