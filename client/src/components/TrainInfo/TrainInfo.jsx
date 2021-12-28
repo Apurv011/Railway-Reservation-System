@@ -83,6 +83,7 @@ function TrainInfo(props){
 
   function goToAddPassenger(){
     if(location.state.guest===true){
+      alert("Please login to book your tickets");
       history.push({
         pathname: '/login',
         state: { trainId: trainId, trainName: trainData.trainName, trainNumber: trainData.trainNumber,

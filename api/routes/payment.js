@@ -10,7 +10,6 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-
 router.post("/razorpay", async (req, res) => {
   const payment_capture = 1;
   const amount = req.body.amt;

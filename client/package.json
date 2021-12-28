@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.22.0",
     "captcha-text-generator": "^1.0.0",
+    "file-saver": "^2.0.5",
     "react": "^17.0.2",
     "react-captcha-generator": "^1.6.3",
     "react-datepicker": "^4.2.1",

@@ -7,11 +7,15 @@ function Header(props){
 
   function logout(){
     localStorage.clear();
-    history.push('/login');
+    history.push('/');
   }
 
   function myTicket(){
     history.push('/myTickets');
+  }
+
+  function myPass(){
+    history.push('/passDetails');
   }
 
   function searchPage(){
@@ -40,6 +44,9 @@ function Header(props){
           </li>
           <li className="nav-item">
             {props.page!=="User Home" && <button onClick={userHome} className="nav-link btn btn-link">My Details</button> }
+          </li>
+          <li className="nav-item">
+            {props.page!=="My Pass" && <button onClick={myPass} className="nav-link btn btn-link">My Pass</button> }
           </li>
           <li className="nav-item">
             {props.page!=="My Tickets" && <button onClick={myTicket} className="nav-link btn btn-link">My Tickets</button> }

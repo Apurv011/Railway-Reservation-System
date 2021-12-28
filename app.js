@@ -8,8 +8,11 @@ const trainRoutes = require('./api/routes/train');
 const ticketRoutes = require('./api/routes/tickets');
 const userRoutes = require('./api/routes/user');
 const stationRoutes = require('./api/routes/stations');
+const localStationRoutes = require('./api/routes/localStation');
 const seatRoutes = require('./api/routes/seats');
 const paymentRoutes = require('./api/routes/payment');
+const passRoutes = require('./api/routes/pass');
+const collegeRoutes = require('./api/routes/colleges');
 
 mongoose.connect(process.env.MONGO_URL_DEV, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -19,6 +22,7 @@ app.use(morgan('dev'));
 
 // Setup static files path
 app.use('/uploads', express.static('uploads'));
+
 
 // Use body parser middleware to parse body of incoming requests
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,8 +44,11 @@ app.use('/trains', trainRoutes);
 app.use('/tickets', ticketRoutes);
 app.use('/user', userRoutes);
 app.use('/stations', stationRoutes);
+app.use('/localStations', localStationRoutes);
 app.use('/seats', seatRoutes);
 app.use('/payment', paymentRoutes);
+app.use('/pass', passRoutes);
+app.use('/college', collegeRoutes);
 
 // Handle Error Requests
 app.use((req, res, next) => {

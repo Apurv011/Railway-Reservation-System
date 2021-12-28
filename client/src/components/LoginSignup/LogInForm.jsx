@@ -24,12 +24,20 @@ function LogInForm(){
         axios.post("http://localhost:5000/user/login", user).then(response => {
               localStorage.setItem('userData', JSON.stringify(response.data));
               if(location.state){
-                history.push({
-                      pathname: '/addPassengers',
-                      state: { trainId: location.state.trainId, trainName: location.state.trainName, trainNumber: location.state.trainNumber,
-                              from: location.state.from, to: location.state.to, cost:location.state.cost, atSrc: location.state.atSrc, atDest: location.state.atDest,
-                              dateOfJourney: location.state.dateOfJourney, seatId: location.state.seatId, availableSeats: location.state.availableSeats, cancelledSeats: location.state.cancelledSeats }
+                if(location.state.passGen){
+                  history.push({
+                      pathname: '/passForm',
+                      state: { type: location.state.type }
+                    });
+                }
+                else{
+                  history.push({
+                        pathname: '/addPassengers',
+                        state: { trainId: location.state.trainId, trainName: location.state.trainName, trainNumber: location.state.trainNumber,
+                                from: location.state.from, to: location.state.to, cost:location.state.cost, atSrc: location.state.atSrc, atDest: location.state.atDest,
+                                dateOfJourney: location.state.dateOfJourney, seatId: location.state.seatId, availableSeats: location.state.availableSeats, cancelledSeats: location.state.cancelledSeats }
                   });
+                }
               }
               else{
                 history.push({

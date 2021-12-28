@@ -21,6 +21,10 @@ const WelcomePage = React.forwardRef((props, ref) => {
       });
   }
 
+  function passGeneration() {
+    history.push('/passGen');
+  }
+
   return (
     <div ref={ref} className={`${styles.center}`}>
       <h1
@@ -44,8 +48,11 @@ const WelcomePage = React.forwardRef((props, ref) => {
         </div>
       </div>
       <div className="text-center">
-      <button type="button" onClick={guest} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Continue As a Guest</strong></button>
-    </div>
+        <button type="button" onClick={guest} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Continue As a Guest</strong></button>
+      </div>
+      <div className="text-center">
+        <button type="button" onClick={passGeneration} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Pass Generation System</strong></button>
+      </div>
     </div>
   );
 });

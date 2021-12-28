@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import PrintTicket from "./PrintTicket";
+import UserPass from "./UserPass";
 import Header from '../Header/Header';
 import {useLocation } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 
-const Print = () => {
+const PrintPass = () => {
 
   const location = useLocation();
 
@@ -17,13 +17,13 @@ const Print = () => {
   return (
 
     <div>
-      <Header guest={location.state.guest}/>
+      <Header />
       <div className="d-flex justify-content-center">
         <div className="mb-3">
           <div className="card-body">
             <h5 className="card-title">
               <form>
-                <PrintTicket ref={componentRef} ticket={location.state.ticket}/>
+                <UserPass ref={componentRef} />
                 <ReactToPrint
                   trigger={() =>
                     <button type="button" className="btn btn-dark btn-lg btn-block">
@@ -43,4 +43,4 @@ const Print = () => {
 
 };
 
-export default Print;
+export default PrintPass;

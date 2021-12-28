@@ -92,13 +92,24 @@ const PrintTicket = React.forwardRef((props, ref) =>{
 
                 <hr />
 
-                <div className="col">
-                  <h4 className="d-flex justify-content-center">
-                    <label htmlFor="inputState">Date of Journey</label>
-                  </h4>
-                  <h3 className="d-flex justify-content-center">
-                    <b>{props.ticket.dateOfJourney}</b>
-                  </h3>
+                <div className="form-row">
+                  <div className="col">
+                    <h4 className="d-flex justify-content-center">
+                      <label htmlFor="inputState">Date of Journey</label>
+                    </h4>
+                    <h3 className="d-flex justify-content-center">
+                      <b>{props.ticket.dateOfJourney}</b>
+                    </h3>
+                  </div>
+
+                  <div className="col">
+                    <h4 className="d-flex justify-content-center">
+                      <label htmlFor="inputState">Date of Booking</label>
+                    </h4>
+                    <h3 className="d-flex justify-content-center">
+                      <b>{props.ticket.dateOfReservation}</b>
+                    </h3>
+                  </div>
                 </div>
 
                 <hr />
@@ -131,6 +142,26 @@ const PrintTicket = React.forwardRef((props, ref) =>{
                   })}
                 </table>
                 </p>
+                </div>
+
+                <hr />
+
+                <div className="form-row">
+                  <div className="col">
+                    <h4 className="d-flex justify-content-center">
+                      <label htmlFor="inputState">Total Fair</label>
+                    </h4>
+                    <h3 className="d-flex justify-content-center">
+                      <b>{props.ticket.cost}</b>
+                    </h3>
+                  </div>
+
+                  <div style={{margin:"auto"}} className="col text-center">
+                    <h2 className="text-success">
+                      <label>Paid</label>
+                    </h2>
+                  </div>
+
                 </div>
 
               </form>
