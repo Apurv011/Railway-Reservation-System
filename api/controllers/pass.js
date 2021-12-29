@@ -124,7 +124,7 @@ exports.getPassPendingByCollege = (req, res, next) => {
 exports.getPassVerifiedByCollege = (req, res, next) => {
     const college = req.params.collegeName;
     Pass
-        .find({$and: [ {collegeName: college}, {status: "Verified by college"} ]})
+        .find({$and: [ {collegeName: college},  {$or: [ {status: "Verified by college"}, {status: "Approved"}, {status: "Rejected"}]}  ]})
         .select('_id payment userId cost name age gender dateOfIssue dateOfExpiry source destination class isStudent collegeName email collegeID contactNo duration collegeIDImage status')
         .exec()
         .then(pass => {

@@ -36,3 +36,7 @@
   background: #2d3436;
   color: #fff;
 }
+
+.bottom:hover {
+  text-decoration: underline;
+}

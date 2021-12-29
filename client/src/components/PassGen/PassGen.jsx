@@ -91,7 +91,7 @@ const PassGen = React.forwardRef((props, ref) => {
         className="text-dark"
         style={{ textAlign: "center", fontSize: "75px" }}
       >
-        Pass Generation System
+        🚏Pass Generation System
       </h1>
       <p
         className="text-dark"
@@ -99,41 +99,41 @@ const PassGen = React.forwardRef((props, ref) => {
       >
         Generate Your Pass Now!
       </p>
-      <div className="row" style={{width: "25%", margin: "0 auto"}}>
-        <div onClick={() => login("Normal")} style={{marginBottom: "20px", marginRight:"5px" }} className={styles.btn}>
-          Normal Pass
-        </div>
-        <div onClick={() => login("Student")} style={{ marginBottom: "30px", marginLeft:"5px" }} className={styles.btn}>
-          Student Pass
+      <div style={{width:"100%"}}>
+        <div style={{margin:"0 auto", display:"table", marginBottom:"40px"}}>
+          <button type="button" onClick={() => login("Normal")} className="btn btn-lg btn-outline-dark mr-3">
+            Normal Pass
+          </button>
+          <button type="button" onClick={() => login("Student")} className="btn btn-lg btn-outline-dark ml-3">
+            Student Pass
+          </button>
         </div>
       </div>
-      <div className="text-center">
-        <button data-toggle="modal"
-                data-target="#exampleModalCenter"
-                type="button" className="btn"
-                style={{marginBottom: "40px", color: "#000000"}}
-                >
-          <strong>College Admin Login</strong>
-        </button>
-      </div>
-      <div className="text-center">
-        <button data-toggle="modal"
-                data-target="#exampleModalCenter2"
-                type="button" className="btn"
-                style={{marginBottom: "40px", color: "#000000"}}
-                >
-          <strong>Railway Admin Login</strong>
-        </button>
+      <div style={{margin:"0 auto", display:"table", marginBottom:"40px"}}>
+      <button data-toggle="modal"
+              data-target="#exampleModalCenter"
+              type="button" className="btn btn-lg"
+              style={{marginBottom: "40px", color: "#000000"}}
+              >
+        <p className={`${styles.bottom}`}>College Admin Login</p>
+      </button>
+      <button data-toggle="modal"
+              data-target="#exampleModalCenter2"
+              type="button" className="btn btn-lg"
+              style={{marginBottom: "40px", color: "#000000"}}
+              >
+        <p className={`${styles.bottom}`}>Railway Admin Login</p>
+      </button>
       </div>
       <div className="modal fade" id="exampleModalCenter">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">College Admin Login</h5>
+              <h5 className="modal-title">👤College Admin Login</h5>
             </div>
             <div className="modal-body">
               <label>
-                <b>Enter College ID</b>
+                <b>✉Enter College ID</b>
               </label>
               <div className="form-inline">
                 <input
@@ -141,11 +141,11 @@ const PassGen = React.forwardRef((props, ref) => {
                   name="collegeId"
                   value={college.collegeId}
                   onChange={handleChange}
-                  className="form-control mr-sm-2"
+                  className="form-control mr-sm-2 mb-3"
                 />
               </div>
-              <label>
-                <b>Enter Password</b>
+              <label className="mt-3">
+                <b>🔑Enter Password</b>
               </label>
               <div className="form-inline">
                 <input
@@ -181,11 +181,11 @@ const PassGen = React.forwardRef((props, ref) => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Admin Login</h5>
+              <h5 className="modal-title">👤Admin Login</h5>
             </div>
             <div className="modal-body">
               <label>
-                <b>Enter Admin ID</b>
+                <b>✉Enter Admin ID</b>
               </label>
               <div className="form-inline">
                 <input
@@ -193,11 +193,11 @@ const PassGen = React.forwardRef((props, ref) => {
                   name="id"
                   value={railAdmin.id}
                   onChange={handleChangeForRail}
-                  className="form-control mr-sm-2"
+                  className="form-control mr-sm-2 mb-3"
                 />
               </div>
-              <label>
-                <b>Enter Password</b>
+              <label className="mt-3">
+                <b>🔑Enter Password</b>
               </label>
               <div className="form-inline">
                 <input

@@ -31,7 +31,7 @@ const WelcomePage = React.forwardRef((props, ref) => {
         className="text-dark"
         style={{ textAlign: "center", fontSize: "75px" }}
       >
-        Reservation System
+        🚉Reservation System
       </h1>
       <p
         className="text-dark"
@@ -48,10 +48,10 @@ const WelcomePage = React.forwardRef((props, ref) => {
         </div>
       </div>
       <div className="text-center">
-        <button type="button" onClick={guest} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Continue As a Guest</strong></button>
+        <button type="button" onClick={guest} className={`${styles.bottom} btn`} style={{marginBottom: "30px", color: "#000000"}}><strong>Continue As a Guest</strong></button>
       </div>
       <div className="text-center">
-        <button type="button" onClick={passGeneration} className="btn" style={{marginBottom: "40px", color: "#000000"}}><strong>Pass Generation System</strong></button>
+        <button type="button" onClick={passGeneration} className="btn btn-lg btn-bolck btn-outline-dark" style={{marginBottom: "40px"}}>Pass Generation System</button>
       </div>
     </div>
   );

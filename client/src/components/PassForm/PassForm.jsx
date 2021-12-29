@@ -173,38 +173,78 @@ function PassForm(props) {
   function generatePass(event){
     if(pass.duration==="1 Month"){
       if(pass.class==="First Class"){
-        setPass((preValues) => {
-          return {
-            ...preValues,
-            cost: "300"
-          };
-        });
+        if(pass.isStudent){
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "300"
+            };
+          });
+        }
+        else{
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "800"
+            };
+          });
+        }
       }
       else{
-        setPass((preValues) => {
-          return {
-            ...preValues,
-            cost: "100"
-          };
-        });
+        if(pass.isStudent){
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "100"
+            };
+          });
+        }
+        else{
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "150"
+            };
+          });
+        }
       }
     }
     else{
       if(pass.class==="First Class"){
-        setPass((preValues) => {
-          return {
-            ...preValues,
-            cost: "800"
-          };
-        });
+        if(pass.isStudent){
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "800"
+            };
+          });
+        }
+        else{
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "1800"
+            };
+          });
+        }
       }
       else{
-        setPass((preValues) => {
-          return {
-            ...preValues,
-            cost: "250"
-          };
-        });
+        if(pass.isStudent){
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "250"
+            };
+          });
+        }
+        else{
+          setPass((preValues) => {
+            return {
+              ...preValues,
+              cost: "500"
+            };
+          });
+        }
       }
     }
     setShowCost(true);
@@ -395,7 +435,7 @@ function PassForm(props) {
                   className="flex-grow-1 bg-register-image"
                   style={{
                     backgroundImage:
-                      "url(https://st3.depositphotos.com/9881890/15397/i/600/depositphotos_153977506-stock-photo-vintage-light-bulb.jpg)"
+                      "url(https://images.moneycontrol.com/static-mcnews/2018/09/561559-railway-012917-770x433.jpg?impolicy=website&width=770&height=431)"
                   }}
                 ></div>
               </div>

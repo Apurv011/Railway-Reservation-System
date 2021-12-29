@@ -51,23 +51,23 @@ const UserPass = React.forwardRef((props, ref) =>{
     <div className="d-flex justify-content-center" style={{marginTop: "80px"}}>
         <div className="card bg-light mb-3">
           <div className="card-header bg-dark">
-            <h3 style={{color:"#ffffff"}} className="d-flex justify-content-center">Your Pass</h3>
+            <h3 style={{color:"#ffffff"}} className="d-flex justify-content-center">Pass</h3>
           </div>
           <div className="card-body">
             <h5 className="card-title">
               <form>
                 <div className="form-row">
-                  <div className="col ">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="trainNumber">Name</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{pass.name}</b>
                     </h3>
                   </div>
 
                   <hr />
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="trainName">Age</label>
                     </h4>
@@ -79,7 +79,7 @@ const UserPass = React.forwardRef((props, ref) =>{
 
                 <hr />
                 <div className="form-row">
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Gender</label>
                     </h4>
@@ -89,7 +89,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                   </div>
 
                   <hr />
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Class</label>
                     </h4>
@@ -103,7 +103,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                 {
                   pass.dateOfIssue!=="NoDate" && pass.dateOfExpiry!=="NoDate" &&
                   <div className="form-row">
-                    <div className="col">
+                    <div className="col" style={{padding: "30px"}}>
                       <h4 className="d-flex justify-content-center">
                         <label htmlFor="inputState">Issue Date</label>
                       </h4>
@@ -114,7 +114,7 @@ const UserPass = React.forwardRef((props, ref) =>{
 
                     <hr />
 
-                    <div className="col">
+                    <div className="col" style={{padding: "30px"}}>
                       <h4 className="d-flex justify-content-center">
                         <label htmlFor="inputState">Expiry Date</label>
                       </h4>
@@ -125,7 +125,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                   </div>
               }
                 <div className="form-row">
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Source</label>
                     </h4>
@@ -134,7 +134,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                     </h3>
                   </div>
 
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Destination</label>
                     </h4>
@@ -147,7 +147,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                 <hr />
 
                 <div className="form-row">
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Duration</label>
                     </h4>
@@ -156,7 +156,7 @@ const UserPass = React.forwardRef((props, ref) =>{
                     </h3>
                   </div>
 
-                  <div className="col">
+                  <div className="col" style={{padding: "30px"}}>
                     <h4 className="d-flex justify-content-center">
                       <label htmlFor="inputState">Cost</label>
                     </h4>

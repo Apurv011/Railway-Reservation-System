@@ -24,18 +24,18 @@ const PrintTicket = React.forwardRef((props, ref) =>{
             <h5 className="card-title">
               <form>
                 <div className="form-row">
-                  <div className="col ">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="trainNumber">Train Number</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.trainNumber}</b>
                     </h3>
                   </div>
 
                   <hr />
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="trainName">Train Name</label>
                     </h4>
                     <h3 className="d-flex justify-content-center">
@@ -46,21 +46,21 @@ const PrintTicket = React.forwardRef((props, ref) =>{
 
                 <hr />
                 <div className="form-row">
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Your Boarding Station</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.from}</b>
                     </h3>
                   </div>
 
                   <hr />
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Your Destination Station</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.to}</b>
                     </h3>
                   </div>
@@ -69,22 +69,22 @@ const PrintTicket = React.forwardRef((props, ref) =>{
                 <hr />
 
                 <div className="form-row">
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Arrival Time at {location.state.ticket.from}</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.atSrc}</b>
                     </h3>
                   </div>
 
                   <hr />
 
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Arrival Time at {location.state.ticket.to}</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.atDest}</b>
                     </h3>
                   </div>
@@ -93,20 +93,20 @@ const PrintTicket = React.forwardRef((props, ref) =>{
                 <hr />
 
                 <div className="form-row">
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Date of Journey</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.dateOfJourney}</b>
                     </h3>
                   </div>
 
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Date of Booking</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.dateOfReservation}</b>
                     </h3>
                   </div>
@@ -114,11 +114,11 @@ const PrintTicket = React.forwardRef((props, ref) =>{
 
                 <hr />
 
-                <div className="col">
-                  <h4 className="d-flex justify-content-center">
+                <div className="col" style={{padding: "30px"}}>
+                  <h4 className="text-center d-flex justify-content-center">
                     <label htmlFor="inputState">Passengers</label>
                   </h4>
-                  <p className="d-flex justify-content-center">
+                  <p className="text-center d-flex justify-content-center">
                 <table className="table">
                   <thead>
                     <tr>
@@ -147,11 +147,11 @@ const PrintTicket = React.forwardRef((props, ref) =>{
                 <hr />
 
                 <div className="form-row">
-                  <div className="col">
-                    <h4 className="d-flex justify-content-center">
+                  <div className="col" style={{padding: "30px"}}>
+                    <h4 className="text-center d-flex justify-content-center">
                       <label htmlFor="inputState">Total Fair</label>
                     </h4>
-                    <h3 className="d-flex justify-content-center">
+                    <h3 className="text-center d-flex justify-content-center">
                       <b>{props.ticket.cost}</b>
                     </h3>
                   </div>

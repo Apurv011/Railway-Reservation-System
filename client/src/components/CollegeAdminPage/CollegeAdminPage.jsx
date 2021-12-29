@@ -184,7 +184,8 @@ function CollegeAdminPage(props){
               <th style={{color:"#ffffff"}}>Class</th>
               <th style={{color:"#ffffff"}}>Duration</th>
               <th style={{color:"#ffffff"}}>Total Cost</th>
-              <th style={{color:"#ffffff"}}>College ID</th>
+              <th style={{color:"#ffffff"}}>Status</th>
+              <th style={{color:"#ffffff"}}>Download College ID</th>
               <th style={{color:"#ffffff"}}>Approve</th>
               <th style={{color:"#ffffff"}}>Reject</th>
             </tr>
@@ -225,6 +226,9 @@ function CollegeAdminPage(props){
             </td>
             <td rowspan={pass.cost}>
               <b>{pass.cost}</b>
+            </td>
+            <td rowspan={pass.status}>
+              <b>{pass.status}</b>
             </td>
             <td rowspan={pass.cost}>
               <button
@@ -278,7 +282,8 @@ function CollegeAdminPage(props){
           <th style={{color:"#ffffff"}}>Class</th>
           <th style={{color:"#ffffff"}}>Duration</th>
           <th style={{color:"#ffffff"}}>Total Cost</th>
-          <th style={{color:"#ffffff"}}>College ID</th>
+          <th style={{color:"#ffffff"}}>Status</th>
+          <th style={{color:"#ffffff"}}>Download College ID</th>
         </tr>
       </thead>
     {verifiedPasses.map((pass, index) => {
@@ -318,6 +323,9 @@ function CollegeAdminPage(props){
         <td rowspan={pass.cost}>
           <b>{pass.cost}</b>
         </td>
+        <td rowspan={pass.status}>
+          <b>{pass.status}</b>
+        </td>
         <td rowspan={pass.cost}>
         <button
           onClick={()=>{saveFile(`http://localhost:5000/${pass.collegeIDImage}`, `${Date.now()}.${pass.collegeIDImage.split('.').at(-1)}`)}}
@@ -352,7 +360,8 @@ function CollegeAdminPage(props){
           <th style={{color:"#ffffff"}}>Class</th>
           <th style={{color:"#ffffff"}}>Duration</th>
           <th style={{color:"#ffffff"}}>Total Cost</th>
-          <th style={{color:"#ffffff"}}>College ID</th>
+          <th style={{color:"#ffffff"}}>Status</th>
+          <th style={{color:"#ffffff"}}>Download College ID</th>
         </tr>
       </thead>
     {rejectedPasses.map((pass, index) => {
@@ -391,6 +400,9 @@ function CollegeAdminPage(props){
         </td>
         <td rowspan={pass.cost}>
           <b>{pass.cost}</b>
+        </td>
+        <td rowspan={pass.status}>
+          <b>{pass.status}</b>
         </td>
         <td rowspan={pass.cost}>
         <button
