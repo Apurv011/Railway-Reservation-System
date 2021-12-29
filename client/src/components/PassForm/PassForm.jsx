@@ -46,7 +46,7 @@ function PassForm(props) {
          axios.get(`http://localhost:5000/pass/user/${foundUser.user._id}`, config).then(res => {
            console.log(res.data[0]);
            if(res.data.length>0){
-             if(res.data[0].status!=="Deleted"){
+             if(res.data[0].status!=="Deleted" && res.data[0].status!=="Deleted, Rejected by college"){
                setIsPass(true);
              }
            }

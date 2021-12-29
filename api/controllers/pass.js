@@ -190,7 +190,7 @@ exports.getPassApproved = (req, res, next) => {
 exports.getPassRejectedByCollege = (req, res, next) => {
     const college = req.params.collegeName;
     Pass
-        .find({$and: [ {collegeName: college}, {status: "Rejected by college"} ]})
+        .find({$and: [ {collegeName: college}, {$or: [ {status: "Rejected by college"}, {status: "Deleted, Rejected by college"}, {status: "Deleted"}, {status: "Rejected"} ] } ] })
         .select('_id payment userId cost name age gender dateOfIssue dateOfExpiry source destination class isStudent collegeName email collegeID contactNo duration collegeIDImage status')
         .exec()
         .then(pass => {

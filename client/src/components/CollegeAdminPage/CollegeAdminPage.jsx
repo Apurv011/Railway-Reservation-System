@@ -402,7 +402,7 @@ function CollegeAdminPage(props){
           <b>{pass.cost}</b>
         </td>
         <td rowspan={pass.status}>
-          <b>{pass.status}</b>
+          <b>{(pass.status==="Deleted" || pass.status==="Rejected") ? "Rejected by railway admin" : pass.status}</b>
         </td>
         <td rowspan={pass.cost}>
         <button

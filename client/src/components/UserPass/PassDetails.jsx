@@ -9,7 +9,7 @@ function PassDetails(props){
   const location = useLocation();
   let history = useHistory();
 
-  const [pass, setPass] = useState({});
+  const [passes, setPasses] = useState([]);
   const [isPass, setIsPass] = useState(false);
 
   const loggedInUser = localStorage.getItem("userData");
@@ -26,10 +26,8 @@ function PassDetails(props){
         axios.get(`http://localhost:5000/pass/user/${foundUser.user._id}`, config).then(res => {
           console.log(res.data[0]);
           if(res.data.length>0){
-            if(res.data[0].status!=="Deleted"){
-              setPass(res.data[0]);
+              setPasses(res.data);
               setIsPass(true);
-            }
           }
           }).catch((error) => {
           history.push("/");
@@ -60,7 +58,7 @@ function PassDetails(props){
      return date;
    }
 
-   function reApply(id){
+   function reApply(id, status){
 
      if (loggedInUser) {
        const foundUser = JSON.parse(loggedInUser);
@@ -69,13 +67,30 @@ function PassDetails(props){
          headers: { "Authorization": "Bearer " + foundUser.token }
        };
 
-       var change = {
-                     "status": "Deleted"
-                   };
+       var change;
+       console.log(status);
+       if(status==="Rejected by college"){
+         change = {"status": "Deleted, Rejected by college"};
+        }
+        else{
+          change = {"status": "Deleted"};
+        }
 
        axios.patch(`http://localhost:5000/pass/${id}`, change, config).then(response => {
            console.log(response.data);
-           setPass({});
+           axios.get(`http://localhost:5000/pass/user/${foundUser.user._id}`, config).then(res => {
+             console.log(res.data[0]);
+             if(res.data.length>0){
+                 setPasses(res.data);
+                 setIsPass(true);
+                 history.push({
+                     pathname: '/passForm',
+                     state: { type: "Student" }
+                   });
+             }
+             }).catch((error) => {
+             history.push("/");
+           });
            setIsPass(false);
        });
      }
@@ -113,7 +128,7 @@ function PassDetails(props){
                                console.log(res.data[0]);
                                if(res.data.length>0){
                                  setIsPass(true);
-                                 setPass(res.data[0]);
+                                 setPasses(res.data);
                                }
                                }).catch((error) => {
                                history.push("/");
@@ -132,7 +147,9 @@ function PassDetails(props){
     <div>
     <Header />
     {isPass ?
-      <div className="table-responsive" style={{padding:"25px"}}>
+      passes.reverse().map((pass, index) => {
+        return(
+          <div className="table-responsive" style={{padding:"25px"}}>
       <table className="table table-hover table-light">
         <thead>
           {pass.isStudent ?
@@ -150,6 +167,9 @@ function PassDetails(props){
               <th style={{color:"#ffffff"}}>Total Cost</th>
               <th style={{color:"#ffffff"}}>Status</th>
               {pass.status==="Rejected" &&
+              <th style={{color:"#ffffff"}}>Re-Apply</th>
+              }
+              {pass.status==="Rejected by college" &&
               <th style={{color:"#ffffff"}}>Re-Apply</th>
               }
               {pass.status==="Approved" &&
@@ -219,12 +239,22 @@ function PassDetails(props){
             <b>{pass.cost}</b>
           </td>
           <td rowspan={pass.status}>
-            <b>{pass.status}</b>
+            <b>{pass.status==="Deleted" ?  "Re-Applied, was rejected by railway admin" : pass.status==="Deleted, Rejected by college" ? "Re-Applied was rejected by college" : pass.status}</b>
           </td>
           {pass.status==="Rejected" &&
           <td rowspan={pass.cost}>
             <button
-              onClick={() => reApply(pass._id)}
+              onClick={() => reApply(pass._id, pass.status)}
+              className="btn btn-sm btn-dark"
+              >
+                Re-Apply
+            </button>
+          </td>
+          }
+          {pass.status==="Rejected by college" &&
+          <td rowspan={pass.cost}>
+            <button
+              onClick={() => reApply(pass._id, pass.status)}
               className="btn btn-sm btn-dark"
               >
                 Re-Apply
@@ -307,6 +337,9 @@ function PassDetails(props){
       </tbody>
   </table>
   </div>
+
+        );
+      })
       :
       <div className="text-center" style={{paddingTop: "50px"}}>
         <h1 style={{paddingBottom: "20px"}}>No Pass Generated Yet!</h1>
